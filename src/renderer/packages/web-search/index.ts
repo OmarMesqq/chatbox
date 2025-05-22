@@ -1,7 +1,6 @@
 import { cachified } from '@epic-web/cachified'
 import { truncate } from 'lodash'
 import type { SearchResultItem } from './base'
-import { TavilySearch } from './tavily'
 import { getExtensionSettings, getLanguage, getLicenseKey } from '@/stores/settingActions'
 import WebSearch from './base'
 import { ChatboxAIAPIError } from '../models/errors'
@@ -27,12 +26,6 @@ function getSearchProviders() {
         )
       }
       selectedProviders.push(new ChatboxSearch(licenseKey))
-      break
-    case 'tavily':
-      if (!settings.webSearch.tavilyApiKey) {
-        throw ChatboxAIAPIError.fromCodeName('tavily_api_key_required', 'tavily_api_key_required')
-      }
-      selectedProviders.push(new TavilySearch(settings.webSearch.tavilyApiKey))
       break
     default:
       throw new Error(`Unsupported search provider: ${provider}`)

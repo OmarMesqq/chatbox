@@ -360,8 +360,7 @@ export interface CustomProvider {
 
 export interface ExtensionSettings {
   webSearch: {
-    provider: 'build-in' | 'tavily' // 搜索提供方
-    tavilyApiKey?: string // Tavily API 密钥
+    provider: 'build-in'
   }
 }
 

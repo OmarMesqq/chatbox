@@ -203,12 +203,6 @@ export class ChatboxAIAPIError extends BaseError {
       i18nKey:
         'You have selected Chatbox AI as the search provider, but a license key has not been entered yet. Please <OpenSettingButton>click here to open Settings</OpenSettingButton> and enter your license key, or choose a different <OpenExtensionSettingButton>search provider</OpenExtensionSettingButton>.',
     },
-    tavily_api_key_required: {
-      name: 'tavily_api_key_required',
-      code: 20025,
-      i18nKey:
-        'You have selected Tavily as the search provider, but an API key has not been entered yet. Please <OpenExtensionSettingButton>click here to open Settings</OpenExtensionSettingButton> and enter your API key, or choose a different search provider.',
-    },
   }
   static fromCodeName(response: string, codeName: string) {
     if (!codeName) {
