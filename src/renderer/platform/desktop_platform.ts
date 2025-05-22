@@ -100,11 +100,6 @@ export default class DesktopPlatform implements Platform {
     return this.ipc.invoke('listStoreBlobKeys')
   }
 
-  public initTracking(): void {
-    setTimeout(() => {
-      this.trackingEvent('user_engagement', {})
-    }, 4000) // 怀疑应用初始化后需要一段时间才能正常工作
-  }
   public trackingEvent(name: string, params: { [key: string]: string }) {
     return;
   }

@@ -42,7 +42,6 @@ export interface Platform {
 
   // 追踪
 
-  initTracking(): void
   trackingEvent(name: string, params: { [key: string]: string }): void
 
   // 通知
