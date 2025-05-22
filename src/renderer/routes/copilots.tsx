@@ -3,7 +3,6 @@ import Page from '@/components/Page'
 import StyledMenu from '@/components/StyledMenu'
 import { useMyCopilots, useRemoteCopilots } from '@/hooks/useCopilots'
 import { useIsSmallScreen } from '@/hooks/useScreenChange'
-import { trackingEvent } from '@/packages/event'
 import * as remote from '@/packages/remote'
 import platform from '@/platform'
 import * as atoms from '@/stores/atoms'
@@ -78,7 +77,6 @@ function Copilots() {
       copilotId: copilot.id,
     })
     sessionActions.switchCurrentSession(newSession.id)
-    trackingEvent('create_copilot_conversation', { event_category: 'user' })
   }
   const handleClose = () => {
     setOpen(false)
@@ -98,8 +96,6 @@ function Copilots() {
   useEffect(() => {
     if (!open) {
       setCopilotEdit(null)
-    } else {
-      trackingEvent('copilot_window', { event_category: 'screen_view' })
     }
   }, [open])
 
@@ -412,7 +408,6 @@ function CopilotForm(props: CopilotFormProps) {
       return
     }
     props.save(copilotEdit)
-    trackingEvent('create_copilot', { event_category: 'user' })
   }
   return (
     <Box

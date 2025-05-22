@@ -7,7 +7,6 @@ import platform from '@/platform'
 import { settingsAtom } from '../stores/atoms'
 import storage from '../storage'
 import Markdown from '@/components/Markdown'
-import { trackingEvent } from '@/packages/event'
 
 const { useEffect, useState } = React
 
@@ -42,13 +41,7 @@ export default function RemoteDialogWindow() {
     checkRemoteDialog()
     setInterval(checkRemoteDialog, 1000 * 60 * 60 * 24) // 对于常年不关机的用户，也要每天检查一次
   }, [])
-  // 打点上报
-  useEffect(() => {
-    if (open) {
-      trackingEvent('remote_dialog_window', { event_category: 'screen_view' })
-    }
-  }, [open])
-
+  
   const onClose = (event?: any, reason?: 'backdropClick' | 'escapeKeyDown') => {
     if (reason === 'backdropClick') {
       return

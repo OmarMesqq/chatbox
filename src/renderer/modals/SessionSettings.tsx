@@ -31,7 +31,6 @@ import { XAIModelSelect } from '@/components/model-select/XAIModelSelect'
 import TemperatureSlider from '@/components/TemperatureSlider'
 import TopPSlider from '@/components/TopPSlider'
 import { useIsSmallScreen } from '@/hooks/useScreenChange'
-import { trackingEvent } from '@/packages/event'
 import { OllamaHostInput } from '@/pages/SettingDialog/OllamaSetting'
 import { StorageKeyGenerator } from '@/storage/StoreStorage'
 import * as atoms from '@/stores/atoms'
@@ -98,11 +97,6 @@ const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatC
     }
   }
 
-  useEffect(() => {
-    if (chatConfigDialogSession) {
-      trackingEvent('chat_config_window', { event_category: 'screen_view' })
-    }
-  }, [chatConfigDialogSessionId])
 
   const onCancel = () => {
     if (chatConfigDialogSession) {

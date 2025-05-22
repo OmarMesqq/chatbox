@@ -9,7 +9,6 @@ import { useSetAtom } from 'jotai'
 import { Link } from '@mui/material'
 import { ChatboxAIAPIError } from '@/packages/models/errors'
 import platform from '@/platform'
-import { trackingEvent } from '@/packages/event'
 import LinkTargetBlank from './Link'
 import { useNavigate } from '@tanstack/react-router'
 
@@ -133,10 +132,7 @@ export default function MessageErrTips(props: { msg: Message }) {
               <Link
                 className="cursor-pointer italic"
                 onClick={() => {
-                  platform.openLink('https://chatboxai.app/redirect_app/view_more_plans')
-                  trackingEvent('click_view_more_plans_button_from_upgrade_error_tips', {
-                    event_category: 'user',
-                  })
+                  platform.openLink('https://example.com')
                 }}
               ></Link>
             ),

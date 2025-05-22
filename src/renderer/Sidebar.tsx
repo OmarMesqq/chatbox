@@ -27,7 +27,7 @@ import { useAtomValue, useAtom } from 'jotai'
 import * as atoms from './stores/atoms'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { useIsSmallScreen, useSidebarWidth } from './hooks/useScreenChange'
-import { trackingEvent } from './packages/event'
+
 import { PanelLeftClose } from 'lucide-react'
 import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { cn } from './lib/utils'
@@ -128,14 +128,12 @@ function SidebarButtons(props: { sessionListRef: React.RefObject<HTMLDivElement>
     if (sessionListRef.current) {
       sessionListRef.current.scrollTo(0, 0)
     }
-    trackingEvent('create_new_conversation', { event_category: 'user' })
   }
   const handleCreateNewPictureSession = () => {
     sessionActions.createEmpty('picture')
     if (sessionListRef.current) {
       sessionListRef.current.scrollTo(0, 0)
     }
-    trackingEvent('create_new_picture_conversation', { event_category: 'user' })
   }
 
   const routerState = useRouterState()

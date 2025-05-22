@@ -14,7 +14,6 @@ import ModelSettingTab from './ModelSettingTab'
 import AdvancedSettingTab from './AdvancedSettingTab'
 import ExtensionSettingTab from './ExtensionSettingTab'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { trackingEvent } from '@/packages/event'
 import * as atoms from '@/stores/atoms'
 import ExtensionIcon from '@mui/icons-material/Extension'
 import { useBlocker } from '@tanstack/react-router'
@@ -34,11 +33,6 @@ export default function SettingWindow(props: {}) {
   useEffect(() => {
     if (targetTab) {
       setCurrentTab(targetTab)
-    }
-  }, [targetTab])
-  useEffect(() => {
-    if (targetTab) {
-      trackingEvent('setting_window', { event_category: 'screen_view' })
     }
   }, [targetTab])
 

@@ -25,15 +25,7 @@ function About() {
   const [open, setOpen] = useAtom(atoms.openAboutDialogAtom)
   const language = useAtomValue(atoms.languageAtom)
   const versionHook = useVersion()
-  // const [sponsorBanners, setSponsorBanners] = useState<SponsorAboutBanner[]>([])
-  // useEffect(() => {
-  //     if (open) {
-  //         remote.listSponsorAboutBanner().then(setSponsorBanners)
-  //         trackingEvent('about_window', { event_category: 'screen_view' })
-  //     } else {
-  //         setSponsorBanners([])
-  //     }
-  // }, [open])
+  
   const handleClose = () => {
     setOpen(false)
   }

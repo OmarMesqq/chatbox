@@ -1,6 +1,5 @@
 import { useInputBoxHeight, useIsSmallScreen } from '@/hooks/useScreenChange'
 import { cn } from '@/lib/utils'
-import { trackingEvent } from '@/packages/event'
 import * as picUtils from '@/packages/pic_utils'
 import platform from '@/platform'
 import storage from '@/storage'
@@ -108,7 +107,6 @@ export default function InputBox() {
     setAttachments([])
     setLinks([])
 
-    trackingEvent('send_message', { event_category: 'user' })
     // 重置清理上下文按钮
     if (showRollbackThreadButton) {
       setShowRollbackThreadButton(false)

@@ -3,7 +3,6 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Input, Button, Dialog, DialogContent, DialogActions, DialogTitle, DialogContentText } from '@mui/material'
 import { useTranslation, Trans } from 'react-i18next'
 import * as sessionActions from '../stores/sessionActions'
-import { trackingEvent } from '@/packages/event'
 
 const ClearSessionList = NiceModal.create(() => {
   const modal = useModal()
@@ -16,13 +15,9 @@ const ClearSessionList = NiceModal.create(() => {
     }
   }
 
-  useEffect(() => {
-    trackingEvent('clear_conversation_list_window', { event_category: 'screen_view' })
-  }, [])
 
   const clean = () => {
     sessionActions.clearConversationList(value)
-    trackingEvent('clear_conversation_list', { event_category: 'user' })
     handleClose()
   }
 
