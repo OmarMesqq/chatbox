@@ -14,7 +14,6 @@ import { autoUpdater } from 'electron-updater'
 import os from 'os'
 import path from 'path'
 import { ShortcutSetting } from 'src/shared/types'
-import * as analystic from './analystic-node'
 import { AppUpdater } from './app-updater'
 import * as autoLauncher from './autoLauncher'
 import { parseFile } from './file-parser'
@@ -32,7 +31,6 @@ import {
 } from './store-node'
 import { resolveHtmlPath } from './util'
 import * as windowState from './window_state'
-import * as analystic from './analystic-node'
 import * as autoLauncher from './autoLauncher'
 import { ShortcutSetting } from 'src/shared/types'
 import { parseFile } from './file-parser'
@@ -483,12 +481,6 @@ ipcMain.handle('relaunch', () => {
   app.quit()
 })
 
-ipcMain.handle('analysticTrackingEvent', (event, dataJson) => {
-  const data = JSON.parse(dataJson)
-  analystic.event(data.name, data.params).catch((e) => {
-    log.error('analystic_tracking_event', e)
-  })
-})
 
 ipcMain.handle('getConfig', (event) => {
   return getConfig()

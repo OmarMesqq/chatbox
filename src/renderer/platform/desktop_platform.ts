@@ -106,8 +106,7 @@ export default class DesktopPlatform implements Platform {
     }, 4000) // 怀疑应用初始化后需要一段时间才能正常工作
   }
   public trackingEvent(name: string, params: { [key: string]: string }) {
-    const dataJson = JSON.stringify({ name, params })
-    this.ipc.invoke('analysticTrackingEvent', dataJson)
+    return;
   }
 
   public async shouldShowAboutDialogWhenStartUp(): Promise<boolean> {
