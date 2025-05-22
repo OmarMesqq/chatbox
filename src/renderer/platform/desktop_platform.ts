@@ -100,10 +100,6 @@ export default class DesktopPlatform implements Platform {
     return this.ipc.invoke('listStoreBlobKeys')
   }
 
-  public trackingEvent(name: string, params: { [key: string]: string }) {
-    return;
-  }
-
   public async shouldShowAboutDialogWhenStartUp(): Promise<boolean> {
     return this.ipc.invoke('shouldShowAboutDialogWhenStartUp')
   }

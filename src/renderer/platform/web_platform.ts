@@ -115,10 +115,6 @@ export default class WebPlatform implements Platform {
     return localforage.keys()
   }
 
-  public trackingEvent(name: string, params: { [key: string]: string }) {
-    window.gtag('event', name, params)
-  }
-
   public async shouldShowAboutDialogWhenStartUp(): Promise<boolean> {
     return false
   }

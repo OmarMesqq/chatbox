@@ -40,9 +40,6 @@ export interface Platform {
   delStoreBlob(key: string): Promise<void>
   listStoreBlobKeys(): Promise<string[]>
 
-  // 追踪
-
-  trackingEvent(name: string, params: { [key: string]: string }): void
 
   // 通知
   shouldShowAboutDialogWhenStartUp(): Promise<boolean>
