@@ -1,8 +1,6 @@
 import { cachified } from '@epic-web/cachified'
 import { truncate } from 'lodash'
 import type { SearchResultItem } from './base'
-import { BingNewsSearch } from './bing-news'
-import { BingSearch } from './bing'
 import { TavilySearch } from './tavily'
 import { getExtensionSettings, getLanguage, getLicenseKey } from '@/stores/settingActions'
 import WebSearch from './base'
@@ -29,12 +27,6 @@ function getSearchProviders() {
         )
       }
       selectedProviders.push(new ChatboxSearch(licenseKey))
-      break
-    case 'bing':
-      selectedProviders.push(new BingSearch())
-      if (language !== 'zh-Hans') {
-        selectedProviders.push(new BingNewsSearch()) // 国内无法使用
-      }
       break
     case 'tavily':
       if (!settings.webSearch.tavilyApiKey) {

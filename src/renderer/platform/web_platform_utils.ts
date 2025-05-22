@@ -1,6 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-import platform from '@/platform'
-import * as remote from '../packages/remote'
 import { isTextFilePath } from 'src/shared/file-extensions'
 
 export async function parseTextFileLocally(file: File): Promise<{ text: string; isSupported: boolean }> {
@@ -10,11 +7,4 @@ export async function parseTextFileLocally(file: File): Promise<{ text: string; 
   }
   const text = await file.text()
   return { text, isSupported: true }
-}
-
-export async function parseUrlContentFree(url: string) {
-  const result = await remote.parseUserLinkFree({ url })
-  const key = `parseUrl-` + uuidv4()
-  await platform.setStoreBlob(key, result.text)
-  return { key, title: result.title }
 }
