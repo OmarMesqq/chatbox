@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react'
 import { useAtomValue } from 'jotai'
 import { StrictMode, useState } from 'react'
 import ReactDOM from 'react-dom/client'
@@ -19,12 +18,6 @@ const log = getLogger('index')
 // 按需加载 polyfill
 import './setup/load_polyfill'
 
-// Sentry 初始化
-import './setup/sentry_init'
-
-// GA4 初始化
-import './setup/ga_init'
-
 // 引入保护代码
 import './setup/protect'
 
@@ -43,7 +36,6 @@ async function initializeApp() {
     log.info('migrate done')
   } catch (e) {
     log.error('migrate error', e)
-    Sentry.captureException(e as Error)
   }
 
   try {
@@ -53,7 +45,6 @@ async function initializeApp() {
     log.info('init data done')
   } catch (e) {
     log.error('init data error', e)
-    Sentry.captureException(e as Error)
   }
 
   // 最后执行 storage 清理，清理不 block 进入UI
@@ -106,7 +97,6 @@ root.render(
 // 等待初始化完成后再渲染
 initializeApp().catch((e) => {
   // 初始化中的各个步骤已经捕获了错误，这里防止未来添加未捕获的逻辑
-  Sentry.captureException(e)
   log.error('initializeApp error', e)
 })
 .finally(() => {

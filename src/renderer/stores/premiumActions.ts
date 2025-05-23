@@ -5,7 +5,6 @@ import { settingsAtom } from '../stores/atoms'
 import platform from '../platform'
 import { FetchError } from 'ofetch'
 import omit from 'lodash/omit'
-import * as Sentry from '@sentry/react'
 import { ModelProvider, Settings } from 'src/shared/types'
 
 /**
@@ -47,7 +46,7 @@ export function useAutoValidate() {
           platform.appLog('info', `clear license validated data due to respones status: ${err.status}`)
         } else {
           // 其余情况可能是联网出现问题，不清除数据
-          Sentry.captureException(err)
+          console.error(`error: ${err}`)
         }
       }
     })()

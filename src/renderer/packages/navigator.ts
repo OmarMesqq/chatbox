@@ -1,16 +1,13 @@
-import * as Sentry from '@sentry/react'
 import copyToClipboardFallback from 'copy-to-clipboard'
 
 export function copyToClipboard(text: string) {
   try {
     navigator?.clipboard?.writeText(text)
   } catch (e) {
-    Sentry.captureException(e)
   }
   try {
     copyToClipboardFallback(text)
   } catch (e) {
-    Sentry.captureException(e)
   }
 }
 

@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react'
 import { store as keypairStore } from './keypairs'
 import { CHATBOX_BUILD_PLATFORM } from '../variables'
 import NiceModal from '@ebay/nice-modal-react'
@@ -25,7 +24,6 @@ export async function tryOpenAppStoreReviewPage() {
     NiceModal.show('app-store-rating')
   } catch (e) {
     console.error(e)
-    Sentry.captureException(e)
   }
 }
 

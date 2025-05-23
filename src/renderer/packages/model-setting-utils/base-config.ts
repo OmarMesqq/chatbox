@@ -1,5 +1,4 @@
 import { ModelOptionGroup, ModelSettings, Settings } from '../../../shared/types'
-import * as Sentry from '@sentry/react'
 import * as remote from '../../packages/remote'
 
 export default abstract class BaseConfig {
@@ -13,11 +12,9 @@ export default abstract class BaseConfig {
     const localOptionGroups = this.getLocalOptionGroups(settings)
     const [modelConfigs, models] = await Promise.all([
       remote.getModelConfigsWithCache(settings).catch((e) => {
-        Sentry.captureException(e)
         return { option_groups: [] as ModelOptionGroup[] }
       }),
       this.listProviderModels(settings).catch((e) => {
-        Sentry.captureException(e)
         return []
       }),
     ])

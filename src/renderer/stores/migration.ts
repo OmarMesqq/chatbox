@@ -13,7 +13,6 @@ import platform from '@/platform'
 import WebPlatform from '@/platform/web_platform'
 import storage, { StorageKey } from '@/storage'
 import { StorageKeyGenerator } from '@/storage/StoreStorage'
-import * as Sentry from '@sentry/react'
 import { getDefaultStore } from 'jotai'
 import oldStore from 'store'
 import * as defaults from '../../shared/defaults'
@@ -52,7 +51,9 @@ export async function migrateOnData(dataStore: MigrateStore, canRelaunch = true)
     return
   }
 
-  const scope = Sentry.getCurrentScope()
+  const scope = { setTag: (key: string, value: any) => {
+    console.log(`migrateOnData.key/value -> ${key}:${value}`)
+  } };
   scope.setTag('configVersion', configVersion)
   log.info(`migrateOnData: ${configVersion}, canRelaunch: ${canRelaunch}`)
 

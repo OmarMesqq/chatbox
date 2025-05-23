@@ -17,7 +17,6 @@ import {
 import * as remote from '@/packages/remote'
 import { estimateTokensFromMessages } from '@/packages/token'
 import { router } from '@/router'
-import * as Sentry from '@sentry/react'
 import { getDefaultStore } from 'jotai'
 import { identity, pickBy, throttle } from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
@@ -638,9 +637,6 @@ export async function submitNewUserMessage(params: {
     if (!(err instanceof Error)) {
       err = new Error(`${err}`)
     }
-    if (!(err instanceof ApiError || err instanceof NetworkError || err instanceof AIProviderNoImplementedPaintError)) {
-      Sentry.captureException(err) // unexpected error should be reported
-    }
     let errorCode: number | undefined = undefined
     if (err instanceof BaseError) {
       errorCode = err.code
@@ -803,9 +799,6 @@ export async function generate(sessionId: string, targetMsg: Message, options?: 
     if (!(err instanceof Error)) {
       err = new Error(`${err}`)
     }
-    if (!(err instanceof ApiError || err instanceof NetworkError || err instanceof AIProviderNoImplementedPaintError)) {
-      Sentry.captureException(err) // unexpected error should be reported
-    }
     let errorCode: number | undefined = undefined
     if (err instanceof BaseError) {
       errorCode = err.code
@@ -884,9 +877,7 @@ async function _generateName(sessionId: string, modifyName: (sessionId: string, 
     // name = name.slice(0, 10)    // 限制名字长度
     modifyName(session.id, name)
   } catch (e: any) {
-    if (!(e instanceof ApiError || e instanceof NetworkError)) {
-      Sentry.captureException(e) // unexpected error should be reported
-    }
+    console.error(`error: ${e}`)
   }
 }
 
