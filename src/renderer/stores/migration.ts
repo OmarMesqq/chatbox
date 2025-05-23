@@ -1,13 +1,6 @@
 import { Session, SessionMeta } from '@/../shared/types'
 import {
-  artifactSessionCN,
-  artifactSessionEN,
-  defaultSessionsForCN,
   defaultSessionsForEN,
-  imageCreatorSessionForCN,
-  imageCreatorSessionForEN,
-  mermaidSessionCN,
-  mermaidSessionEN,
 } from '@/packages/initial_data'
 import platform from '@/platform'
 import WebPlatform from '@/platform/web_platform'
@@ -130,29 +123,6 @@ export async function migrateOnData(dataStore: MigrateStore, canRelaunch = true)
   }
 }
 
-async function migrate_0_to_1(dataStore: MigrateStore) {
-  const settings = await dataStore.getData(StorageKey.Settings, defaults.settings())
-  // 如果历史版本的用户开启了消息的token计数展示，那么也帮他们开启token消耗展示
-  if (settings.showTokenCount) {
-    await dataStore.setData(StorageKey.Settings, { ...settings, showTokenUsed: true })
-  }
-}
-
-async function migrate_1_to_2(dataStore: MigrateStore) {
-  const sessions = await dataStore.getData<Session[]>(StorageKey.ChatSessions, [])
-  const lang = await platform.getLocale()
-  if (lang.startsWith('zh')) {
-    if (sessions.find((session) => session.id === imageCreatorSessionForCN.id)) {
-      return
-    }
-    await dataStore.setData(StorageKey.ChatSessions, [...sessions, imageCreatorSessionForCN])
-  } else {
-    if (sessions.find((session) => session.id === imageCreatorSessionForEN.id)) {
-      return
-    }
-    await dataStore.setData(StorageKey.ChatSessions, [...sessions, imageCreatorSessionForEN])
-  }
-}
 
 async function migrate_2_to_3(dataStore: MigrateStore) {
   // 原来 Electron 应用存储图片 base64 数据到 IndexedDB，现在改成本地文件存储
@@ -174,16 +144,6 @@ async function migrate_2_to_3(dataStore: MigrateStore) {
   }
 }
 
-async function migrate_3_to_4(dataStore: MigrateStore) {
-  const sessions = await dataStore.getData<Session[]>(StorageKey.ChatSessions, [])
-  const lang = await platform.getLocale()
-  const targetSession = lang.startsWith('zh') ? artifactSessionCN : artifactSessionEN
-  if (sessions.find((session) => session.id === targetSession.id)) {
-    return
-  }
-  await dataStore.setData(StorageKey.ChatSessions, [...sessions, targetSession])
-}
-
 async function migrate_4_to_5(dataStore: MigrateStore): Promise<boolean> {
   if (platform.type !== 'web') {
     return false
@@ -203,15 +163,6 @@ async function migrate_4_to_5(dataStore: MigrateStore): Promise<boolean> {
   return true
 }
 
-async function migrate_5_to_6(dataStore: MigrateStore) {
-  const sessions = await dataStore.getData<Session[]>(StorageKey.ChatSessions, [])
-  const lang = await platform.getLocale()
-  const targetSession = lang.startsWith('zh') ? mermaidSessionCN : mermaidSessionEN
-  if (sessions.find((session) => session.id === targetSession.id)) {
-    return
-  }
-  await dataStore.setData(StorageKey.ChatSessions, [...sessions, targetSession])
-}
 
 // 针对 mobile 端，从 store 迁移至 sqlite
 // 解决容量不够用的问题
@@ -276,7 +227,6 @@ async function migrate_8_to_9(dataStore: MigrateStore): Promise<boolean> {
 
   const defaultSessionIds = uniq([
     ...defaultSessionsForEN.map((session) => session.id),
-    ...defaultSessionsForCN.map((session) => session.id),
   ])
 
   // 如果 intersectSessionIds 里还有值，说明之前成功执行过 7-8 的 migration，跳过找回步骤
