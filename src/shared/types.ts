@@ -136,7 +136,6 @@ export interface Session {
   picUrl?: string
   messages: Message[]
   starred?: boolean
-  copilotId?: string
   assistantAvatarKey?: string // 助手头像的 key
   settings?: Partial<ReturnType<typeof settings2SessionSettings>>
   threads?: SessionThread[] // 历史话题列表
@@ -474,18 +473,6 @@ export interface SponsorAboutBanner {
   link: string
   title: string
   description: string
-}
-
-export interface CopilotDetail {
-  id: string
-  name: string
-  picUrl?: string
-  prompt: string
-  demoQuestion?: string
-  demoAnswer?: string
-  starred?: boolean
-  usedCount: number
-  shared?: boolean
 }
 
 export interface Toast {

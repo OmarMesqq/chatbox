@@ -157,48 +157,7 @@ function SidebarButtons(props: { sessionListRef: React.RefObject<HTMLDivElement>
             <span>{t('New Images')}</span>
           </span>
         </Button>
-      </Box>
-
-      {/* <MenuItem onClick={handleCreateNewSession} sx={{ padding: '0.2rem 0.1rem', margin: '0.1rem' }}>
-        <ListItemIcon>
-          <IconButton>
-            <AddIcon fontSize="small" />
-          </IconButton>
-        </ListItemIcon>
-        <ListItemText>{t('new chat')}</ListItemText>
-        <Typography variant="body2" color="text.secondary">
-        </Typography>
-      </MenuItem>
-
-      <MenuItem onClick={handleCreateNewPictureSession} sx={{ padding: '0.2rem 0.1rem', margin: '0.1rem' }}>
-        <ListItemIcon>
-          <IconButton>
-            <AddPhotoAlternateIcon fontSize="small" />
-          </IconButton>
-        </ListItemIcon>
-        <ListItemText>{t('New Images')}</ListItemText>
-        <Typography variant="body2" color="text.secondary">
-        </Typography>
-      </MenuItem> */}
-
-      <MenuItem
-        onClick={() => {
-          navigate({
-            to: '/copilots',
-          })
-        }}
-        selected={routerState.location.pathname === '/copilots'}
-        sx={{ padding: '0.2rem 0.1rem', margin: '0.1rem' }}
-      >
-        <ListItemIcon>
-          <IconButton>
-            <SmartToyIcon fontSize="small" />
-          </IconButton>
-        </ListItemIcon>
-        <ListItemText>
-          <Typography>{t('My Copilots')}</Typography>
-        </ListItemText>
-      </MenuItem>
+      </Box>      
 
       <MenuItem
         onClick={() => {

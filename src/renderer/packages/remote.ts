@@ -1,7 +1,6 @@
 import { USE_LOCAL_API } from '@/variables'
 import {
   Config,
-  CopilotDetail,
   RemoteConfig,
   ChatboxAILicenseDetail,
   Settings,
@@ -73,8 +72,7 @@ if (USE_LOCAL_API) {
   console.log('==================')
   API_ORIGIN = 'http://localhost:8002'
 } else {
-  testApiOrigins()
-  setInterval(testApiOrigins, 60 * 60 * 1000)
+  console.log(`placeholder for prod testApiOrigins()`)
 }
 
 // ========== 各个接口方法 ==========
@@ -93,27 +91,6 @@ export async function checkNeedUpdate(version: string, os: string, config: Confi
     },
   })
   return !!res['need_update']
-}
-
-export async function listCopilots(lang: string) {
-  type Response = {
-    data: CopilotDetail[]
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/api/copilots/list`, {
-    method: 'POST',
-    retry: 3,
-    body: { lang },
-  })
-  return res['data']
-}
-
-export async function recordCopilotShare(detail: CopilotDetail) {
-  await ofetch(`${API_ORIGIN}/api/copilots/share-record`, {
-    method: 'POST',
-    body: {
-      detail: detail,
-    },
-  })
 }
 
 export async function getPremiumPrice() {

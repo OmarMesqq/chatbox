@@ -199,20 +199,6 @@ const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatC
           value={editingData.name}
           onChange={(e) => setEditingData({ ...editingData, name: e.target.value })}
         />
-        <div className="mt-1">
-          <TextField
-            margin="dense"
-            label={t('Instruction (System Prompt)')}
-            placeholder={t('Copilot Prompt Demo') || ''}
-            fullWidth
-            variant="outlined"
-            multiline
-            minRows={2}
-            maxRows={8}
-            value={systemPrompt}
-            onChange={(event) => setSystemPrompt(event.target.value)}
-          />
-        </div>
         <Accordion defaultExpanded={!!editingData.settings} className="mt-2">
           <AccordionSummary aria-controls="panel1a-content">
             <div className="flex flex-row w-full justify-between items-center">
