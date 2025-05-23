@@ -1,5 +1,5 @@
 import { getLogger } from '@/lib/utils'
-import { defaultSessionsForCN, defaultSessionsForEN } from '@/packages/initial_data'
+import { defaultSessionsForEN } from '@/packages/initial_data'
 import platform from '@/platform'
 import storage from '@/storage'
 import { StorageKey, StorageKeyGenerator } from '@/storage/StoreStorage'
@@ -103,7 +103,7 @@ async function initPresetSessions() {
   const lang = await platform.getLocale().catch((e) => 'en')
   log.info(`initPresetSessions, lang: ${lang}`)
 
-  const defaultSessions = lang.startsWith('zh') ? defaultSessionsForCN : defaultSessionsForEN
+  const defaultSessions = defaultSessionsForEN
   log.info(`initPresetSessions, defaultSessions: ${defaultSessions.length}`)
 
   for (const session of defaultSessions) {
