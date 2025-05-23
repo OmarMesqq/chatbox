@@ -7,13 +7,19 @@ This is the repository for the Chatbox Community Edition, open-sourced under the
 
 ## Build Instructions
 
-Install the required dependencies
+1. Install the required dependencies
 
 ```bash
 npm install
 ```
 
-## For Android
+2. Build the application, package the installer for the current platform
+
+```bash
+npm run package
+```
+
+### For Android
 1. Add Android build to Capacitor
 
 ```bash
@@ -30,13 +36,6 @@ npm run mobile:sync:android
 ```bash
 cd android
 ./gradlew assembleDebug
-```
-
-## For Linux
-1. Build the application, package the installer for all platforms
-
-```bash
-npm run package
 ```
 
 ## License
