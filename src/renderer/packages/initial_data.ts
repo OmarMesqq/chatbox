@@ -81,7 +81,6 @@ export const defaultSessionsForEN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:24',
   },
   {
     id: '55d92e88-02af-4c3b-a378-aa0a1970abb1',
@@ -110,7 +109,6 @@ export const defaultSessionsForEN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:33',
   },
   {
     id: '35df5a96-b612-406a-985b-3ab4d2c481ff',
@@ -139,7 +137,6 @@ export const defaultSessionsForEN: Session[] = [
       },
     ].map(migrateMessage),
     starred: true,
-    copilotId: 'chatbox-featured:35',
   },
   {
     id: '776eac23-7b4a-40da-91cd-f233bb4742ed',
@@ -203,7 +200,6 @@ export const defaultSessionsForEN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:56',
   },
 ]
 
@@ -234,7 +230,6 @@ export const defaultSessionsForCN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:7',
   },
   {
     id: '8732ec08-b23c-4b5e-8f65-d63d808f970f',
@@ -263,7 +258,6 @@ export const defaultSessionsForCN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:23',
   },
   {
     id: '3e091ac6-ebfa-42c9-b125-c67ac2d45ee1',
@@ -291,7 +285,6 @@ export const defaultSessionsForCN: Session[] = [
       },
     ].map(migrateMessage),
     starred: false,
-    copilotId: 'chatbox-featured:21',
   },
   ...defaultSessionsForEN,
 ]
