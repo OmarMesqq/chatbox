@@ -18,7 +18,7 @@ import platform from '@/platform'
 
 // const RELEASE_ORIGIN = 'https://releases.chatboxai.app'
 
-export let API_ORIGIN = 'https://api.chatboxai.app'
+export let API_ORIGIN = 'http://localhost:8080'
 
 export function isChatboxAPI(url: RequestInfo | URL) {
   return url.toString().startsWith(API_ORIGIN)
@@ -31,12 +31,7 @@ async function testApiOrigins() {
   // 从缓存中获取已知的 API 域名列表
   let pool = await cache.store.getItem<string[] | null>('api_origins').catch(() => null)
   if (!pool) {
-    pool = [
-      'https://api.chatboxai.app',
-      'https://chatboxai.app',
-      'https://api.ai-chatbox.com',
-      'https://api.chatboxapp.xyz',
-    ]
+    pool = []
   }
   // 按顺序测试 API 的可用性
   let i = 0
@@ -73,38 +68,6 @@ if (USE_LOCAL_API) {
   API_ORIGIN = 'http://localhost:8002'
 } else {
   console.log(`placeholder for prod testApiOrigins()`)
-}
-
-// ========== 各个接口方法 ==========
-
-export async function checkNeedUpdate(version: string, os: string, config: Config, settings: Settings) {
-  type Response = {
-    need_update?: boolean
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/chatbox_need_update/${version}`, {
-    method: 'POST',
-    retry: 3,
-    body: {
-      uuid: config.uuid,
-      os: os,
-      allowReportingAndTracking: settings.allowReportingAndTracking ? 1 : 0,
-    },
-  })
-  return !!res['need_update']
-}
-
-export async function getPremiumPrice() {
-  type Response = {
-    data: {
-      price: number
-      discount: number
-      discountLabel: string
-    }
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/api/premium/price`, {
-    retry: 3,
-  })
-  return res['data']
 }
 
 export async function getRemoteConfig(config: keyof RemoteConfig) {
