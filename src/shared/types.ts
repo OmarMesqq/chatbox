@@ -420,9 +420,6 @@ export interface ShortcutSetting {
   sessionListNavTargetIndex: string // 切换到指定会话的快捷键
   messageListRefreshContext: string // 刷新上下文的快捷键
   dialogOpenSearch: string // 打开搜索对话框的快捷键
-  // inputBoxSend: string // 发送消息的快捷键
-  // inputBoxInsertNewLine: string // 输入框换行的快捷键
-  // inputBoxSendWithoutResponse: string // 发送但不生成回复的快捷键
   optionNavUp: string // 选项导航的快捷键
   optionNavDown: string // 选项导航的快捷键
   optionSelect: string // 选项导航的快捷键

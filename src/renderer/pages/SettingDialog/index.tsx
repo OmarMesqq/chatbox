@@ -17,7 +17,6 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import * as atoms from '@/stores/atoms'
 import ExtensionIcon from '@mui/icons-material/Extension'
 import { useBlocker } from '@tanstack/react-router'
-// import { resetTokenConfig } from '../../packages/token_config'
 
 export default function SettingWindow(props: {}) {
   const { t } = useTranslation()

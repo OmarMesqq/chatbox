@@ -200,12 +200,6 @@ export default class MenuBuilder {
             shell.openExternal('https://github.com/chatboxai/chatbox')
           },
         },
-        // {
-        //   label: 'Community Discussions',
-        //   click() {
-        //     shell.openExternal('https://www.electronjs.org/community');
-        //   },
-        // },
         {
           label: 'Search Issues',
           click() {

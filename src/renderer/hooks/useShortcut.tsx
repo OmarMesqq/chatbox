@@ -61,12 +61,6 @@ function keyboardShortcut(e: KeyboardEvent, navigate?: NavigationCallback) {
     sessionActions.createEmpty('picture')
     return
   }
-  // 归档当前会话的上下文。
-  // if (e.code === 'KeyR' && altOrOption) {
-  //     e.preventDefault()
-  //     sessionActions.startNewThread()
-  //     return
-  // }
   if (e.code === 'KeyR' && ctrlKey) {
     e.preventDefault()
     sessionActions.startNewThread()

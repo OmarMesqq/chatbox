@@ -86,15 +86,12 @@ export async function svgToPngBase64(svgBase64: string): Promise<string> {
               // 检查NaN
               width = Math.max(viewBoxWidth, img.width)
               height = Math.max(viewBoxHeight, img.height)
-              // console.log('viewBoxWidth', viewBoxWidth, 'viewBoxHeight', viewBoxHeight)
             }
           }
         }
       } catch (e) {
         console.error(e)
       }
-      // console.log('img.width', img.width, 'img.height', img.height)
-      // console.log('width', width, 'height', height)
 
       const canvas = document.createElement('canvas')
       const scale = 2

@@ -138,11 +138,6 @@ export function ShortcutConfig(props: {
       keys: shortcuts.inpubBoxSendMessage,
       options: shortcutSendValues,
     },
-    // {
-    //     label: t('Insert a New Line into the Input Box'),
-    //     // name: 'inputBoxInsertNewLine',
-    //     keys: shortcuts.inputBoxInsertNewLine,
-    // },
     {
       label: t('Send Without Generating Response'),
       name: 'inpubBoxSendMessageWithoutResponse',
