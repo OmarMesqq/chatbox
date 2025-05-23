@@ -18,9 +18,6 @@ const log = getLogger('index')
 // 按需加载 polyfill
 import './setup/load_polyfill'
 
-// 引入保护代码
-import './setup/protect'
-
 // 引入移动端安全区域代码，主要为了解决异形屏幕的问题
 if (CHATBOX_BUILD_TARGET === 'mobile_app' && CHATBOX_BUILD_PLATFORM === 'ios') {
   import('./setup/mobile_safe_area')
