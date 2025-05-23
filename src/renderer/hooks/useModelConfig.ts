@@ -9,6 +9,9 @@ export default function useModelConfig(settings: Settings, aiProvider?: ModelPro
 
   const latestRequestId = useRef(0)
   const refreshWithRemoteOptionGroups = async () => {
+    if (!settings.allowReportingAndTracking) {
+      return;
+    }
     const requestId = ++latestRequestId.current
     const mergedOptions = await modelConfig.getMergeOptionGroups(settings)
     if (requestId === latestRequestId.current) {
