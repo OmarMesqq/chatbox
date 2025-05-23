@@ -14,13 +14,18 @@ npm install
 ```
 
 ## For Android
-1. Build the application
+1. Add Android build to Capacitor
 
+```bash
+npx cap add android
+```
+
+2. Sync the build
 ```bash
 npm run mobile:sync:android
 ```
 
-2. Generate the debug APK
+3. Generate the debug APK
 
 ```bash
 cd android
