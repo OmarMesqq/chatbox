@@ -914,6 +914,11 @@ async function genMessageContext(settings: Settings, msgs: Message[]) {
     msgs = msgs.slice(1)
   }
   let totalLen = head ? estimateTokensFromMessages([head]) : 0
+  if (!totalLen) {
+    console.error(`totalLen is null`);
+    const msg: Message[] = [];
+    return msg
+  }
   let prompts: Message[] = []
   for (let i = msgs.length - 1; i >= 0; i--) {
     let msg = msgs[i]
@@ -921,7 +926,13 @@ async function genMessageContext(settings: Settings, msgs: Message[]) {
     if (msg.error || msg.errorCode) {
       continue
     }
-    const size = estimateTokensFromMessages([msg]) + 20 // 20 作为预估的误差补偿
+    const estimate = estimateTokensFromMessages([msg]);
+    if (!estimate) {
+      console.error(`estimate is null`);
+      const msg: Message[] = [];
+      return msg;
+    }
+    const size =  + 20 // 20 作为预估的误差补偿
     // 只有 OpenAI 才支持上下文 tokens 数量限制
     if (settings.aiProvider === 'openai') {
       // if (size + totalLen > openaiMaxContextTokens) {

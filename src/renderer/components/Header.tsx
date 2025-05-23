@@ -141,7 +141,7 @@ export default function Header(props: Props) {
                   editCurrentSession()
                 }}
               >
-                {currentSession.name}
+                {currentSession?.name}
               </Typography>
             }
             <div

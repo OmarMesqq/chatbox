@@ -1,4 +1,6 @@
-import WebSearch, { SearchResult } from './base'
+import { SearchResult } from 'src/shared/types'
+import WebSearch from './base'
+
 import { webBrowsing } from '@/packages/remote'
 
 export class ChatboxSearch extends WebSearch {
