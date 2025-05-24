@@ -92,7 +92,7 @@ export function settings(): Settings {
     autoGenerateTitle: true,
 
     autoLaunch: false,
-    autoUpdate: true,
+    autoUpdate: false,
     betaUpdate: false,
 
     shortcuts: {
@@ -114,7 +114,7 @@ export function settings(): Settings {
     },
     extension: {
       webSearch: {
-        provider: 'build-in',
+        provider: 'duckduckgo',
       },
     },
   }

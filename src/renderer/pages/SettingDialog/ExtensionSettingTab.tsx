@@ -27,7 +27,7 @@ export default function ExtensionSettingTab(props: Props) {
               </Typography>
               <SimpleSelect
                 label={t('Search Provider')}
-                value={settingsEdit.extension?.webSearch?.provider ?? 'build-in'}
+                value={settingsEdit.extension?.webSearch?.provider ?? 'duckduckgo'}
                 onChange={(provider) => {
                   setSettingsEdit({
                     ...settingsEdit,
@@ -41,7 +41,7 @@ export default function ExtensionSettingTab(props: Props) {
                   })
                 }}
                 options={[
-                  { value: 'build-in', label: 'Chatbox' },
+                  { value: 'duckduckgo', label: 'DuckDuckGo' },
                 ]}
               />
             </FormGroup>

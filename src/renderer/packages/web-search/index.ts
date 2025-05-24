@@ -1,34 +1,25 @@
 import { cachified } from '@epic-web/cachified'
 import { truncate } from 'lodash'
 import { SearchResultItem } from 'src/shared/types'
-import { getExtensionSettings, getLanguage, getLicenseKey } from '@/stores/settingActions'
+import { getExtensionSettings } from '@/stores/settingActions'
 import WebSearch from './base'
-import { ChatboxAIAPIError } from '../models/errors'
-import { ChatboxSearch } from './chatbox-search'
+import { DuckDuckGoSearch } from './duckduckgo'
 
 const MAX_CONTEXT_ITEMS = 10
 
 // 根据配置的搜索提供方来选择搜索服务
 function getSearchProviders() {
   const settings = getExtensionSettings()
-  const licenseKey = getLicenseKey()
 
   const selectedProviders: WebSearch[] = []
   const provider = settings.webSearch.provider
-  const language = getLanguage()
 
   switch (provider) {
-    case 'build-in':
-      if (!licenseKey) {
-        throw ChatboxAIAPIError.fromCodeName(
-          'chatbox_search_license_key_required',
-          'chatbox_search_license_key_required'
-        )
-      }
-      selectedProviders.push(new ChatboxSearch(licenseKey))
+    case 'duckduckgo':
+      selectedProviders.push(new DuckDuckGoSearch())
       break
     default:
-      throw new Error(`Unsupported search provider: ${provider}`)
+      console.error(`getSearchProviders.unsupportedSearchProvider: ${provider}`)
   }
 
   return selectedProviders

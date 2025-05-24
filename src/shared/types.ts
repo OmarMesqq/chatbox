@@ -359,7 +359,7 @@ export interface CustomProvider {
 
 export interface ExtensionSettings {
   webSearch: {
-    provider: 'build-in'
+    provider: 'duckduckgo'
   }
 }
 
