@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Chatbox',
   webDir: 'release/app/dist/renderer',
    server: {
-    cleartext: true
+    cleartext: true,
+    androidScheme: 'http'
   }
 };
 
