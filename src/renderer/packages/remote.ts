@@ -1,12 +1,8 @@
 import { USE_LOCAL_API } from '@/variables'
 import {
-  Config,
   RemoteConfig,
-  ChatboxAILicenseDetail,
-  Settings,
   ModelProvider,
   ModelOptionGroup,
-  Message,
 } from '../../shared/types'
 import { ofetch } from 'ofetch'
 import { afetch, uploadFile } from './request'
@@ -15,14 +11,9 @@ import { uniq } from 'lodash'
 import platform from '@/platform'
 
 // ========== API ORIGIN 根据可用性维护 ==========
-
-// const RELEASE_ORIGIN = 'https://releases.chatboxai.app'
-
 export let API_ORIGIN = 'http://localhost:8080'
 
-export function isChatboxAPI(url: RequestInfo | URL) {
-  return url.toString().startsWith(API_ORIGIN)
-}
+
 /**
  * 按顺序测试 API 的可用性，只要有一个 API 域名可用，就终止测试并切换所有流量到该域名。
  * 在测试过程中，会根据服务器返回添加新的 API 域名，并缓存到本地
@@ -93,32 +84,6 @@ export async function getDialogConfig(params: { uuid: string; language: string; 
     method: 'POST',
     retry: 3,
     body: params,
-  })
-  return res['data'] || null
-}
-
-export async function getLicenseDetail(params: { licenseKey: string }) {
-  type Response = {
-    data: ChatboxAILicenseDetail | null
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/api/license/detail`, {
-    retry: 3,
-    headers: {
-      Authorization: params.licenseKey,
-    },
-  })
-  return res['data'] || null
-}
-
-export async function getLicenseDetailRealtime(params: { licenseKey: string }) {
-  type Response = {
-    data: ChatboxAILicenseDetail | null
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/api/license/detail/realtime`, {
-    retry: 5,
-    headers: {
-      Authorization: params.licenseKey,
-    },
   })
   return res['data'] || null
 }
@@ -279,72 +244,6 @@ export async function webBrowsing(params: { licenseKey: string; query: string })
   return json['data']
 }
 
-export async function activateLicense(params: { licenseKey: string; instanceName: string }) {
-  type Response = {
-    data: {
-      valid: boolean
-      instanceId: string
-      error: string
-    }
-  }
-  const res = await afetch(
-    `${API_ORIGIN}/api/license/activate`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    },
-    {
-      parseChatboxRemoteError: true,
-      retry: 5,
-    }
-  )
-  const json: Response = await res.json()
-  return json['data']
-}
-
-export async function deactivateLicense(params: { licenseKey: string; instanceId: string }) {
-  await afetch(
-    `${API_ORIGIN}/api/license/deactivate`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    },
-    {
-      parseChatboxRemoteError: true,
-      retry: 5,
-    }
-  )
-}
-
-export async function validateLicense(params: { licenseKey: string; instanceId: string }) {
-  type Response = {
-    data: {
-      valid: boolean
-    }
-  }
-  const res = await afetch(
-    `${API_ORIGIN}/api/license/validate`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    },
-    {
-      parseChatboxRemoteError: true,
-      retry: 5,
-    }
-  )
-  const json: Response = await res.json()
-  return json['data']
-}
 
 export async function getModelConfigs(params: { aiProvider: ModelProvider; licenseKey?: string; language?: string }) {
   type Response = {

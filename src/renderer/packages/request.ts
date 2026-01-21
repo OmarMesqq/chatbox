@@ -1,7 +1,5 @@
 import { parseJsonOrEmpty } from '@/lib/utils'
-import platform from '@/platform'
 import { ApiError, BaseError, ChatboxAIAPIError, NetworkError } from './models/errors'
-import { isChatboxAPI } from './remote'
 
 // TODO: 尽可能在其他地方（llm）中复用这个函数
 export async function afetch(
@@ -14,18 +12,9 @@ export async function afetch(
 ) {
   let requestError: BaseError | null = null
   const retry = options.retry || 0
+  
   for (let i = 0; i < retry + 1; i++) {
     try {
-      if (isChatboxAPI(url)) {
-        init = {
-          ...init,
-          headers: {
-            ...init?.headers,
-            'CHATBOX-PLATFORM': platform.type,
-            'CHATBOX-VERSION': (await platform.getVersion()) || 'unknown',
-          },
-        }
-      }
       const res = await fetch(url, init)
       // 状态码不在 200～299 之间，一般是接口报错了，这里也需要抛错后重试
       if (!res.ok) {
@@ -56,6 +45,7 @@ export async function afetch(
       await new Promise((resolve) => setTimeout(resolve, 500))
     }
   }
+  
   if (requestError) {
     throw requestError
   } else {

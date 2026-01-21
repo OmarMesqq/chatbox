@@ -16,12 +16,14 @@ function Index() {
     if (!currentSession) {
       return
     }
+    // If we have a previous session, redirect to its page immediately
     navigate({
       to: `/session/${currentSession?.id}`,
       replace: true,
     })
   }, [currentSession])
   
+  // If we do NOT have a previous session, show Chatbox's default page
   return (
     <div className="p-2 flex flex-col items-center justify-center h-full">
       <img src={icon} className="w-32 h-32 align-middle" />

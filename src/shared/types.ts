@@ -252,18 +252,6 @@ export type ModelMeta = {
   }
 }
 
-export interface CustomProvider {
-  id: string
-  name: string
-  api: 'openai'
-  host: string
-  path: string
-  key: string
-  model: string
-  modelOptions?: string[]
-  useProxy?: boolean
-}
-
 export interface ExtensionSettings {
   webSearch: {
     provider: 'duckduckgo'
@@ -381,19 +369,6 @@ export enum Theme {
 export interface RemoteConfig {
   setting_chatboxai_first: boolean
   product_ids: number[]
-}
-
-export interface ChatboxAILicenseDetail {
-  type: ChatboxAIModel // 弃用，存在于老版本中
-  name: string
-  defaultModel: ChatboxAIModel
-  remaining_quota_35: number
-  remaining_quota_4: number
-  remaining_quota_image: number
-  image_used_count: number
-  image_total_quota: number
-  token_refreshed_time: string
-  token_expire_time: string | null | undefined
 }
 
 export type ChatboxAIModel = 'chatboxai-3.5' | 'chatboxai-4' | string

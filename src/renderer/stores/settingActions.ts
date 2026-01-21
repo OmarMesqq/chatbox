@@ -1,7 +1,6 @@
 import { getDefaultStore } from 'jotai'
 import * as atoms from './atoms'
-import * as defaults from '../../shared/defaults'
-import { Settings, ModelProvider, CustomProvider } from '../../shared/types'
+import { Settings, ModelProvider } from '../../shared/types'
 
 export function modify(update: Partial<Settings>) {
   const store = getDefaultStore()
