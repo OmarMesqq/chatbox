@@ -756,39 +756,6 @@ export async function generate(sessionId: string, targetMsg: Message, options?: 
         }
         modifyMessage(sessionId, targetMsg, true)
         break
-      // 图片消息生成
-      case 'picture':
-        // 取当前消息之前最近的一条用户消息作为 prompt
-        let prompt = ''
-        for (let i = targetMsgIx; i >= 0; i--) {
-          if (messages[i].role === 'user') {
-            prompt = getMessageText(messages[i])
-            break
-          }
-        }
-        const insertImage = (image: MessageImagePart) => {
-          targetMsg.contentParts.push(image)
-          targetMsg.status = []
-          modifyMessage(sessionId, targetMsg, true)
-        }
-        await generateImage(model, {
-          prompt,
-          num: settings.imageGenerateNum,
-          callback: async (picBase64) => {
-            const storageKey = StorageKeyGenerator.picture(`${sessionId}:${targetMsg.id}`)
-            // 图片需要存储到 indexedDB，如果直接使用 OpenAI 返回的图片链接，图片链接将随着时间而失效
-            await storage.setBlob(storageKey, picBase64)
-            insertImage({ type: 'image', storageKey })
-          },
-        })
-        targetMsg = {
-          ...targetMsg,
-          generating: false,
-          cancel: undefined,
-          status: [],
-        }
-        modifyMessage(sessionId, targetMsg, true)
-        break
       default:
         throw new Error(`Unknown session type: ${session.type}, generate failed`)
     }

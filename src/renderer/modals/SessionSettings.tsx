@@ -158,9 +158,7 @@ const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatC
           removable={!!editingData.assistantAvatarKey}
           sx={{
             backgroundColor:
-              editingData.type === 'picture'
-                ? theme.palette.secondary.main
-                : editingData.picUrl
+              editingData.picUrl !== undefined
                 ? theme.palette.background.default
                 : theme.palette.primary.main,
           }}
@@ -172,14 +170,6 @@ const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatC
             />
           ) : editingData.picUrl ? (
             <img src={editingData.picUrl} className="object-cover object-center w-full h-full" />
-          ) : editingData.type === 'picture' ? (
-            <ImageIcon
-              fontSize="large"
-              sx={{
-                width: '60px',
-                height: '60px',
-              }}
-            />
           ) : globalSettings.defaultAssistantAvatarKey ? (
             <ImageInStorage
               storageKey={globalSettings.defaultAssistantAvatarKey}
@@ -213,9 +203,6 @@ const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatC
           <AccordionDetails>
             {isChatSession(chatConfigDialogSession) && (
               <ChatConfig dataEdit={editingData} setDataEdit={setEditingData} />
-            )}
-            {isPictureSession(chatConfigDialogSession) && (
-              <PictureConfig dataEdit={editingData} setDataEdit={setEditingData} />
             )}
           </AccordionDetails>
         </Accordion>

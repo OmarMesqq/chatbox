@@ -1,8 +1,3 @@
-<p align="right">
-  <a href="README.md">English</a> |
-  <a href="./doc/README-CN.md">简体中文</a>
-</p>
-
 This is the repository for the Chatbox Community Edition, open-sourced under the GPLv3 license.
 
 ## Build Instructions
