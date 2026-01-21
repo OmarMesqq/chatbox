@@ -19,7 +19,6 @@ import * as atoms from '@/stores/atoms'
 import SearchDialog from '@/pages/SearchDialog'
 import Sidebar from '@/Sidebar'
 import PictureDialog from '@/pages/PictureDialog'
-import * as premiumActions from '@/stores/premiumActions'
 import platform from '@/platform'
 import { getOS } from '@/packages/navigator'
 import ExitFullscreenButton from '@/components/ExitFullscreenButton'
@@ -44,10 +43,6 @@ function Root() {
         setRemoteConfig((conf) => ({ ...conf, ...remoteConfig }))
         // 是否需要弹出设置窗口
         if (settingActions.needEditSetting()) {
-          if (remoteConfig.setting_chatboxai_first) {
-            settingActions.modify({ aiProvider: ModelProvider.ChatboxAI })
-          }
-
           const res = await NiceModal.show('welcome')
           if (res) {
             if (res === 'custom') {
@@ -129,7 +124,6 @@ function Root() {
 export const Route = createRootRoute({
   component: () => {
     useI18nEffect()
-    premiumActions.useAutoValidate() // 每次启动都执行 license 检查，防止用户在lemonsqueezy管理页面中取消了当前设备的激活
     useSystemLanguageWhenInit()
     useShortcut()
     useScreenChange()
