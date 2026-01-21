@@ -379,9 +379,6 @@ export async function getModelConfigsWithCache(params: {
   licenseKey?: string
   language?: string
 }) {
-  if (params.aiProvider === ModelProvider.Custom) {
-    return { option_groups: [] }
-  }
   type ModelConfig = Awaited<ReturnType<typeof getModelConfigs>>
   const remoteOptionGroups = await cache.cache<ModelConfig>(
     `model-options:${params.aiProvider}:${params.licenseKey}:${params.language}1`,

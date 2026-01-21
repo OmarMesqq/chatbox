@@ -19,10 +19,7 @@ export const settingsAtom = atom(
   (get, set, update: SetStateAction<Settings>) => {
     const settings = get(_settingsAtom)
     let newSettings = typeof update === 'function' ? update(settings) : update
-    // 考虑关键配置的缺省情况
-    if (!newSettings.apiHost) {
-      newSettings.apiHost = defaults.settings().apiHost
-    }
+    
     // 如果快捷键配置发生变化，需要重新注册快捷键
     if (newSettings.shortcuts !== settings.shortcuts) {
       platform.ensureShortcutConfig(newSettings.shortcuts)
@@ -55,13 +52,11 @@ export const allowReportingAndTrackingAtom = focusAtom(settingsAtom, (optic) => 
 export const enableMarkdownRenderingAtom = focusAtom(settingsAtom, (optic) => optic.prop('enableMarkdownRendering'))
 export const enableLaTeXRenderingAtom = focusAtom(settingsAtom, (optic) => optic.prop('enableLaTeXRendering'))
 export const enableMermaidRenderingAtom = focusAtom(settingsAtom, (optic) => optic.prop('enableMermaidRendering'))
-export const selectedCustomProviderIdAtom = focusAtom(settingsAtom, (optic) => optic.prop('selectedCustomProviderId'))
 export const autoPreviewArtifactsAtom = focusAtom(settingsAtom, (optic) => optic.prop('autoPreviewArtifacts'))
 export const autoGenerateTitleAtom = focusAtom(settingsAtom, (optic) => optic.prop('autoGenerateTitle'))
 export const autoCollapseCodeBlockAtom = focusAtom(settingsAtom, (optic) => optic.prop('autoCollapseCodeBlock'))
 export const shortcutsAtom = focusAtom(settingsAtom, (optic) => optic.prop('shortcuts'))
 export const pasteLongTextAsAFileAtom = focusAtom(settingsAtom, (optic) => optic.prop('pasteLongTextAsAFile'))
-export const licenseDetailAtom = focusAtom(settingsAtom, (optic) => optic.prop('licenseDetail'))
 
 // Related UI state, moved here for proximity to settings
 export const openSettingDialogAtom = atom<SettingWindowTab | null>(null) 

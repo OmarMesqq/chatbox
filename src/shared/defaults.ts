@@ -3,66 +3,16 @@ import { v4 as uuidv4 } from 'uuid'
 
 export function settings(): Settings {
   return {
-    aiProvider: ModelProvider.OpenAI,
-    openaiKey: '',
-    apiHost: 'https://api.openai.com',
-    dalleStyle: 'vivid',
-    imageGenerateNum: 3,
-    openaiUseProxy: false,
+    aiProvider: ModelProvider.Ollama,
 
-    azureApikey: '',
-    azureDeploymentName: '',
-    azureDeploymentNameOptions: [],
-    azureDalleDeploymentName: 'dall-e-3',
-    azureEndpoint: '',
-    azureApiVersion: '2024-05-01-preview',
-
-    chatglm6bUrl: '', // deprecated
-    chatglmApiKey: '',
-    chatglmModel: '',
-
-    model: 'gpt-4o',
-    openaiCustomModelOptions: [],
     temperature: 0.7,
     topP: 1,
-    // openaiMaxTokens: 0,
-    // openaiMaxContextTokens: 4000,
-    openaiMaxContextMessageCount: 20,
+
     // maxContextSize: "4000",
     // maxTokens: "2048",
 
-    claudeApiKey: '',
-    claudeApiHost: 'https://api.anthropic.com/v1',
-    claudeModel: 'claude-3-5-sonnet-20241022',
-
-    chatboxAIModel: 'chatboxai-3.5',
-
-    geminiAPIKey: '',
-    geminiAPIHost: 'https://generativelanguage.googleapis.com',
-    geminiModel: 'gemini-1.5-pro-latest',
-
     ollamaHost: 'http://127.0.0.1:11434',
     ollamaModel: '',
-
-    groqAPIKey: '',
-    groqModel: 'llama3-70b-8192',
-
-    deepseekAPIKey: '',
-    deepseekModel: 'deepseek-chat',
-
-    siliconCloudKey: '',
-    siliconCloudModel: 'Qwen/Qwen2.5-7B-Instruct',
-
-    lmStudioHost: 'http://127.0.0.1:1234/v1',
-    lmStudioModel: '',
-
-    perplexityApiKey: '',
-    perplexityModel: 'llama-3.1-sonar-large-128k-online',
-
-    xAIKey: '',
-    xAIModel: 'grok-beta',
-
-    customProviders: [],
 
     showWordCount: false,
     showTokenCount: false,

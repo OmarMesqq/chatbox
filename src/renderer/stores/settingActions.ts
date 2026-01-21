@@ -14,52 +14,11 @@ export function modify(update: Partial<Settings>) {
 export function needEditSetting() {
   const store = getDefaultStore()
   const settings = store.get(atoms.settingsAtom)
-  if (settings.aiProvider === 'chatbox-ai' && !settings.licenseKey) {
-    return true
-  }
-  if (
-    settings.aiProvider === 'openai' &&
-    settings.openaiKey === '' &&
-    settings.apiHost === defaults.settings().apiHost
-  ) {
-    return true
-  }
-  if (
-    settings.aiProvider === 'azure' &&
-    (settings.azureApikey === '' || settings.azureDeploymentName === '' || settings.azureEndpoint === '')
-  ) {
-    return true
-  }
-  if (settings.aiProvider === 'chatglm-6b' && !settings.chatglmApiKey) {
-    return true
-  }
-  if (settings.aiProvider === 'claude' && !settings.claudeApiKey) {
-    return true
-  }
-  if (settings.aiProvider === 'gemini' && !settings.geminiAPIKey) {
-    return true
-  }
+  
   if (settings.aiProvider === 'ollama' && !settings.ollamaModel) {
     return true
   }
-  if (settings.aiProvider === 'groq' && !settings.groqAPIKey) {
-    return true
-  }
-  if (settings.aiProvider === 'deepseek' && !settings.deepseekAPIKey) {
-    return true
-  }
-  if (settings.aiProvider === 'siliconflow' && !settings.siliconCloudKey) {
-    return true
-  }
-  if (settings.aiProvider === 'lm-studio' && !settings.lmStudioModel) {
-    return true
-  }
-  if (settings.aiProvider === 'perplexity' && !settings.perplexityApiKey) {
-    return true
-  }
-  if (settings.aiProvider === 'xAI' && !settings.xAIKey) {
-    return true
-  }
+  
   return false
 }
 
@@ -73,12 +32,6 @@ export function getProxy() {
   const store = getDefaultStore()
   const settings = store.get(atoms.settingsAtom)
   return settings.proxy
-}
-
-export function getLicenseKey() {
-  const store = getDefaultStore()
-  const settings = store.get(atoms.settingsAtom)
-  return settings.licenseKey
 }
 
 export function getRemoteConfig() {
@@ -107,23 +60,4 @@ export function setModelProvider(provider: ModelProvider) {
 export function getExtensionSettings() {
   const store = getDefaultStore()
   return store.get(atoms.settingsAtom).extension
-}
-
-export function createCustomProvider() {
-  const newCustomProvider: CustomProvider = {
-    id: `custom-provider-${Date.now()}`,
-    name: 'Untitled',
-    api: 'openai',
-    host: 'https://api.openai.com/v1',
-    path: '/chat/completions',
-    key: '',
-    model: 'gpt-4o',
-  }
-  const store = getDefaultStore()
-  store.set(atoms.settingsAtom, (settings) => ({
-    ...settings,
-    aiProvider: ModelProvider.Custom,
-    selectedCustomProviderId: newCustomProvider.id,
-    customProviders: [newCustomProvider, ...settings.customProviders],
-  }))
 }

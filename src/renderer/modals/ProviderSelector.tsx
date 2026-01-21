@@ -10,11 +10,7 @@ const ProviderSelector = NiceModal.create(() => {
   const modal = useModal()
 
   const onSetup = (provider: ModelProvider) => {
-    if (provider === ModelProvider.Custom) {
-      settingActions.createCustomProvider()
-    } else {
-      settingActions.setModelProvider(provider)
-    }
+    settingActions.setModelProvider(provider)
     modal.resolve(provider)
     modal.hide()
   }
@@ -56,24 +52,6 @@ const ProviderSelector = NiceModal.create(() => {
               </ListItemButton>
             </ListItem>
           ))}
-          <ListItem key={'custom'} disablePadding>
-            <ListItemButton
-              onClick={() => onSetup(ModelProvider.Custom)}
-              sx={{
-                borderRadius: '8px',
-                mb: 1,
-                border: '1px solid',
-                borderColor: 'divider',
-              }}
-            >
-              <ListItemText
-                primary={t('Add Custom Provider')}
-                primaryTypographyProps={{
-                  fontWeight: 600,
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
         </List>
       </DialogContent>
     </Dialog>

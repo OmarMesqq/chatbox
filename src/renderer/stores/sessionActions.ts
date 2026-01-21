@@ -8,11 +8,8 @@ import { getModelDisplayName, isModelSupportToolUse } from '@/packages/model-set
 import { getModel } from '@/packages/models'
 import type { onResultChangeWithCancel } from '@/packages/models/types'
 import {
-  AIProviderNoImplementedPaintError,
-  ApiError,
   BaseError,
   ChatboxAIAPIError,
-  NetworkError,
 } from '@/packages/models/errors'
 import * as remote from '@/packages/remote'
 import { estimateTokensFromMessages } from '@/packages/token'
@@ -29,7 +26,6 @@ import {
   MessageImagePart,
   MessageLink,
   MessagePicture,
-  ModelProvider,
   ModelSettings,
   Session,
   SessionMeta,
@@ -38,7 +34,6 @@ import {
   createMessage,
   settings2SessionSettings,
 } from '../../shared/types'
-import i18n from '../i18n'
 import * as promptFormat from '../packages/prompts'
 import platform from '../platform'
 import storage from '../storage'
@@ -511,7 +506,6 @@ export async function submitNewUserMessage(params: {
   insertMessage(currentSessionId, newUserMsg)
 
   const settings = getCurrentSessionMergedSettings()
-  const isChatboxAI = settings.aiProvider === ModelProvider.ChatboxAI
   const remoteConfig = settingActions.getRemoteConfig()
 
   // 根据需要，插入空白的回复消息
@@ -552,21 +546,6 @@ export async function submitNewUserMessage(params: {
 
     // 如果本次发送消息携带了附件，应该在这次发送中上传文件并构造文件信息(file uuid)
     if (attachments && attachments.length > 0) {
-      if (isChatboxAI) {
-        // Chatbox AI 方案
-        const licenseKey = settingActions.getLicenseKey()
-        const newFiles: MessageFile[] = []
-        for (const attachment of attachments || []) {
-          const storageKey = await remote.uploadAndCreateUserFile(licenseKey || '', attachment)
-          newFiles.push({
-            id: storageKey,
-            name: attachment.name,
-            fileType: attachment.type,
-            storageKey,
-          })
-        }
-        modifyMessage(currentSessionId, { ...newUserMsg, files: newFiles }, false)
-      } else {
         // 本地方案
         const newFiles: MessageFile[] = []
         const tokenLimitPerFile = Math.ceil((40 * 1000) / attachments.length)
@@ -589,26 +568,9 @@ export async function submitNewUserMessage(params: {
           })
         }
         modifyMessage(currentSessionId, { ...newUserMsg, files: newFiles }, false)
-      }
     }
     // 如果本次发送消息携带了链接，应该在这次发送中解析链接并构造链接信息(link uuid)
     if (links && links.length > 0) {
-      if (isChatboxAI) {
-        // Chatbox AI 方案
-        const licenseKey = settingActions.getLicenseKey()
-        const newLinks: MessageLink[] = await Promise.all(
-          links.map(async (l) => {
-            const parsed = await remote.parseUserLinkPro({ licenseKey: licenseKey || '', url: l.url })
-            return {
-              id: parsed.key,
-              url: l.url,
-              title: parsed.title,
-              storageKey: parsed.storageKey,
-            }
-          })
-        )
-        modifyMessage(currentSessionId, { ...newUserMsg, links: newLinks }, false)
-      } else {
         // 本地方案
         const newLinks: MessageLink[] = []
         for (const link of links) {
@@ -627,7 +589,6 @@ export async function submitNewUserMessage(params: {
           }
         }
         modifyMessage(currentSessionId, { ...newUserMsg, links: newLinks }, false)
-      }
     }
   } catch (err: any) {
     // 如果文件上传失败，一定会出现带有错误信息的回复消息
@@ -897,13 +858,8 @@ async function genMessageContext(settings: Settings, msgs: Message[]) {
       const msg: Message[] = [];
       return msg;
     }
-    const size =  + 20 // 20 作为预估的误差补偿
-    // 只有 OpenAI 才支持上下文 tokens 数量限制
-    if (settings.aiProvider === 'openai') {
-      // if (size + totalLen > openaiMaxContextTokens) {
-      //     break
-      // }
-    }
+    const size = + 20 // 20 作为预估的误差补偿
+
     if (
       toBeRemoved_getContextMessageCount(openaiMaxContextMessageCount, maxContextMessageCount) <
         Number.MAX_SAFE_INTEGER &&
@@ -1038,21 +994,7 @@ export function mergeSettings(
     ...globalSettings,
     ...specialSettings, // 会话配置优先级高于全局配置
   }
-  // 对于自定义模型提供方，只有模型 model 可以被会话配置覆盖
-  if (ret.customProviders) {
-    ret.customProviders = globalSettings.customProviders.map((provider) => {
-      if (specialSettings.customProviders) {
-        const specialProvider = specialSettings.customProviders.find((p) => p.id === provider.id)
-        if (specialProvider) {
-          return {
-            ...provider,
-            model: specialProvider.model, // model 字段的会话配置优先级高于全局配置
-          }
-        }
-      }
-      return provider
-    })
-  }
+
   return ret
 }
 
