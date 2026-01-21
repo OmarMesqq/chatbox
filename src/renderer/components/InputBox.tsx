@@ -18,7 +18,6 @@ import { useDropzone } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
 import { createMessage, ShortcutSendValue } from '../../shared/types'
 import * as dom from '../hooks/dom'
-import icon from '../static/icon.png'
 import * as atoms from '../stores/atoms'
 import * as sessionActions from '../stores/sessionActions'
 import { FileMiniCard, ImageMiniCard, LinkMiniCard } from './Attachments'
@@ -324,9 +323,6 @@ export default function InputBox() {
     }
   }
 
-  // 小彩蛋
-  const [easterEgg, setEasterEgg] = useState(false)
-
   // 拖拽上传
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles: File[]) => {
@@ -349,16 +345,7 @@ export default function InputBox() {
       <div className={'w-full mx-auto flex flex-col'}>
         <div className="flex flex-row flex-nowrap justify-between py-1">
           <div className="flex flex-row items-center overflow-x-auto scrollbar-none">
-            <MiniButton
-              className="mr-1 sm:mr-2 hover:bg-transparent"
-              style={{ color: theme.palette.text.primary }}
-              onClick={() => {
-                setEasterEgg(true)
-                setTimeout(() => setEasterEgg(false), 1000)
-              }}
-            >
-              <img className={cn('w-5 h-5', easterEgg ? 'animate-spin' : '')} src={icon} />
-            </MiniButton>
+
             {showRollbackThreadButton ? (
               <MiniButton
                 className="mr-1 sm:mr-2"
