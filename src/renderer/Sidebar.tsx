@@ -1,8 +1,7 @@
-import { useEffect, useRef, useMemo, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import {
   Box,
-  Badge,
   ListItemText,
   MenuList,
   IconButton,
@@ -18,14 +17,12 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useTranslation } from 'react-i18next'
 import icon from './static/icon.png'
-import SmartToyIcon from '@mui/icons-material/SmartToy'
 import AddIcon from '@mui/icons-material/AddCircleOutline'
 import useVersion from './hooks/useVersion'
 import SessionList from './components/SessionList'
 import * as sessionActions from './stores/sessionActions'
 import { useAtomValue, useAtom } from 'jotai'
 import * as atoms from './stores/atoms'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import { useIsSmallScreen, useSidebarWidth } from './hooks/useScreenChange'
 
 import { PanelLeftClose } from 'lucide-react'
@@ -129,12 +126,6 @@ function SidebarButtons(props: { sessionListRef: React.RefObject<HTMLDivElement>
       sessionListRef.current.scrollTo(0, 0)
     }
   }
-  const handleCreateNewPictureSession = () => {
-    sessionActions.createEmpty('picture')
-    if (sessionListRef.current) {
-      sessionListRef.current.scrollTo(0, 0)
-    }
-  }
 
   const routerState = useRouterState()
   const navigate = useNavigate()
@@ -147,14 +138,6 @@ function SidebarButtons(props: { sessionListRef: React.RefObject<HTMLDivElement>
           <span className="flex flex-col normal-case">
             <span>{t('new chat')}</span>
             <span className="opacity-0 h-0">{t('New Images')}</span>
-          </span>
-        </Button>
-
-        <Button variant="outlined" className="w-full gap-2 " size="large" onClick={handleCreateNewPictureSession}>
-          <AddPhotoAlternateIcon fontSize="small" />
-          <span className="flex flex-col normal-case">
-            <span className="opacity-0 h-0">{t('new chat')}</span>
-            <span>{t('New Images')}</span>
           </span>
         </Button>
       </Box>      
