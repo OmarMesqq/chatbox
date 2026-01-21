@@ -125,9 +125,7 @@ export type SessionType = 'chat' | 'picture'
 export function isChatSession(session: Session) {
   return session.type === 'chat' || !session.type
 }
-export function isPictureSession(session: Session) {
-  return session.type === 'picture'
-}
+
 
 export interface Session {
   id: string

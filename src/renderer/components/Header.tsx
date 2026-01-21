@@ -1,13 +1,12 @@
 import { cn } from '@/lib/utils'
 import NiceModal from '@ebay/nice-modal-react'
 import EditIcon from '@mui/icons-material/Edit'
-import ImageIcon from '@mui/icons-material/Image'
-import { Box, Chip, IconButton, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { PanelRightClose } from 'lucide-react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { isChatSession, isPictureSession } from '../../shared/types'
+import { isChatSession } from '../../shared/types'
 import useNeedRoomForWinControls from '../hooks/useNeedRoomForWinControls'
 import { useIsSmallScreen } from '../hooks/useScreenChange'
 import * as atoms from '../stores/atoms'
@@ -60,22 +59,6 @@ export default function Header(props: Props) {
           className="ml-1 cursor-pointer w-4 h-4 opacity-30"
           fontSize="small"
           style={{ color: theme.palette.warning.main }}
-        />
-      </Tooltip>
-    )
-  } else if (currentSession && isPictureSession(currentSession)) {
-    EditButton = (
-      <Tooltip
-        title={t('The Image Creator plugin has been activated for the current conversation')}
-        className="cursor-pointer"
-      >
-        <Chip
-          className="ml-2 cursor-pointer"
-          variant="outlined"
-          color="secondary"
-          size="small"
-          icon={<ImageIcon className="cursor-pointer" />}
-          label={<span className="cursor-pointer">{t('Image Creator')}</span>}
         />
       </Tooltip>
     )

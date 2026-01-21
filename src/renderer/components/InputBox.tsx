@@ -275,9 +275,6 @@ export default function InputBox() {
   }
 
   const onPaste = (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    if (currentSessionType === 'picture') {
-      return
-    }
     if (event.clipboardData && event.clipboardData.items) {
       // 对于 Doc/PPT/XLS 等文件中的内容，粘贴时一般会有 4 个 items，分别是 text 文本、html、某格式和图片
       // 因为 getAsString 为异步操作，无法根据 items 中的内容来定制不同的粘贴行为，因此这里选择了最简单的做法：
