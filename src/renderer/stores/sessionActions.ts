@@ -44,6 +44,7 @@ import { cloneMessage, countMessageWords, getMessageText, mergeMessages } from '
 import * as settingActions from './settingActions'
 import { StorageKeyGenerator } from '@/storage/StoreStorage'
 import { toBeRemoved_getContextMessageCount } from '@/components/MaxContextMessageCountSlider'
+import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 
 /**
  * 创建一个新的会话
@@ -546,49 +547,49 @@ export async function submitNewUserMessage(params: {
 
     // 如果本次发送消息携带了附件，应该在这次发送中上传文件并构造文件信息(file uuid)
     if (attachments && attachments.length > 0) {
-        // 本地方案
-        const newFiles: MessageFile[] = []
-        const tokenLimitPerFile = Math.ceil((40 * 1000) / attachments.length)
-        for (const attachment of attachments) {
-          await new Promise((resolve) => setTimeout(resolve, 3000)) // 等待一段时间，方便显示提示
-          const result = await platform.parseFileLocally(attachment, { tokenLimit: tokenLimitPerFile })
-          if (!result.isSupported || !result.key) {
-            // 根据当前 IP，判断是否在错误中推荐 Chatbox AI
-            if (remoteConfig.setting_chatboxai_first) {
-              throw ChatboxAIAPIError.fromCodeName('model_not_support_file', 'model_not_support_file')
-            } else {
-              throw ChatboxAIAPIError.fromCodeName('model_not_support_file_2', 'model_not_support_file_2')
-            }
+      // 本地方案
+      const newFiles: MessageFile[] = []
+      const tokenLimitPerFile = Math.ceil((40 * 1000) / attachments.length)
+      for (const attachment of attachments) {
+        await new Promise((resolve) => setTimeout(resolve, 3000)) // 等待一段时间，方便显示提示
+        const result = await platform.parseFileLocally(attachment, { tokenLimit: tokenLimitPerFile })
+        if (!result.isSupported || !result.key) {
+          // 根据当前 IP，判断是否在错误中推荐 Chatbox AI
+          if (remoteConfig.setting_chatboxai_first) {
+            throw ChatboxAIAPIError.fromCodeName('model_not_support_file', 'model_not_support_file')
+          } else {
+            throw ChatboxAIAPIError.fromCodeName('model_not_support_file_2', 'model_not_support_file_2')
           }
-          newFiles.push({
-            id: result.key,
-            name: attachment.name,
-            fileType: attachment.type,
-            storageKey: result.key,
-          })
         }
-        modifyMessage(currentSessionId, { ...newUserMsg, files: newFiles }, false)
+        newFiles.push({
+          id: result.key,
+          name: attachment.name,
+          fileType: attachment.type,
+          storageKey: result.key,
+        })
+      }
+      modifyMessage(currentSessionId, { ...newUserMsg, files: newFiles }, false)
     }
     // 如果本次发送消息携带了链接，应该在这次发送中解析链接并构造链接信息(link uuid)
     if (links && links.length > 0) {
-        // 本地方案
-        const newLinks: MessageLink[] = []
-        for (const link of links) {
-          const { key, title } = await localParser.parseUrl(link.url)
-          newLinks.push({
-            id: key,
-            url: link.url,
-            title,
-            storageKey: key,
-          })
-          // 等待一段时间，方便显示提示
-          if (links.length === 1) {
-            await new Promise((resolve) => setTimeout(resolve, 5000))
-          } else {
-            await new Promise((resolve) => setTimeout(resolve, 2500))
-          }
+      // 本地方案
+      const newLinks: MessageLink[] = []
+      for (const link of links) {
+        const { key, title } = await localParser.parseUrl(link.url)
+        newLinks.push({
+          id: key,
+          url: link.url,
+          title,
+          storageKey: key,
+        })
+        // 等待一段时间，方便显示提示
+        if (links.length === 1) {
+          await new Promise((resolve) => setTimeout(resolve, 5000))
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, 2500))
         }
-        modifyMessage(currentSessionId, { ...newUserMsg, links: newLinks }, false)
+      }
+      modifyMessage(currentSessionId, { ...newUserMsg, links: newLinks }, false)
     }
   } catch (err: any) {
     // 如果文件上传失败，一定会出现带有错误信息的回复消息
@@ -829,7 +830,6 @@ export function clearConversationList(keepNum: number) {
 async function genMessageContext(settings: Settings, msgs: Message[]) {
   const {
     // openaiMaxContextTokens,
-    openaiMaxContextMessageCount,
     maxContextMessageCount,
   } = settings
   if (msgs.length === 0) {
@@ -861,9 +861,9 @@ async function genMessageContext(settings: Settings, msgs: Message[]) {
     const size = + 20 // 20 作为预估的误差补偿
 
     if (
-      toBeRemoved_getContextMessageCount(openaiMaxContextMessageCount, maxContextMessageCount) <
-        Number.MAX_SAFE_INTEGER &&
-      prompts.length >= toBeRemoved_getContextMessageCount(openaiMaxContextMessageCount, maxContextMessageCount) + 1 // +1是为了保留用户最后一条输入消息
+      toBeRemoved_getContextMessageCount(OPENAI_MAX_CONTEXT_MESSAGE_COUNT, maxContextMessageCount) <
+      Number.MAX_SAFE_INTEGER &&
+      prompts.length >= toBeRemoved_getContextMessageCount(OPENAI_MAX_CONTEXT_MESSAGE_COUNT, maxContextMessageCount) + 1 // +1是为了保留用户最后一条输入消息
     ) {
       break
     }

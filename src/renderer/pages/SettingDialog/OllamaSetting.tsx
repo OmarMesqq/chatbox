@@ -11,6 +11,7 @@ import { useAtomValue } from 'jotai'
 import { Trans, useTranslation } from 'react-i18next'
 import { ModelSettings } from '@/../shared/types'
 import { Accordion, AccordionDetails, AccordionSummary } from '@/components/Accordion'
+import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 
 export function OllamaHostInput(props: {
   ollamaHost: string
@@ -89,7 +90,7 @@ export default function OllamaSetting(props: ModelConfigProps) {
         <AccordionDetails>
           <MaxContextMessageCountSlider
             value={toBeRemoved_getContextMessageCount(
-              settingsEdit.openaiMaxContextMessageCount,
+              OPENAI_MAX_CONTEXT_MESSAGE_COUNT,
               settingsEdit.maxContextMessageCount
             )}
             onChange={(v) => setSettingsEdit({ ...settingsEdit, maxContextMessageCount: v })}

@@ -1,8 +1,9 @@
+import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 import { TextField, Slider, Typography, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
 export function toBeRemoved_getContextMessageCount(
-  openaiMaxContextMessageCount: number,
+  openaiMaxContextMessageCount: number = OPENAI_MAX_CONTEXT_MESSAGE_COUNT,
   maxContextMessageCount?: number
 ) {
   return typeof maxContextMessageCount === 'number'
