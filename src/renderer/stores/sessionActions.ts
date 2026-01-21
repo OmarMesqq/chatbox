@@ -36,7 +36,6 @@ import {
   SessionThread,
   Settings,
   createMessage,
-  pickPictureSettings,
   settings2SessionSettings,
 } from '../../shared/types'
 import i18n from '../i18n'
@@ -1056,14 +1055,11 @@ export function getMessageThreadContext(sessionId: string, messageId: string): M
 export function mergeSettings(
   globalSettings: Settings,
   sessionSetting: Partial<ModelSettings>,
-  sessionType?: 'picture' | 'chat'
+  sessionType?: 'chat'
 ): Settings {
   let specialSettings = sessionSetting
   // 过滤掉会话专属设置中不应该存在的设置项，为了兼容旧版本数据和防止疏漏
   switch (sessionType) {
-    case 'picture':
-      specialSettings = pickPictureSettings(specialSettings as Settings)
-      break
     case undefined:
     case 'chat':
     default:

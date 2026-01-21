@@ -218,10 +218,6 @@ export function settings2SessionSettings(settings: ModelSettings) {
   ])
 }
 
-export function pickPictureSettings(settings: ModelSettings) {
-  return pick(settings, ['dalleStyle', 'imageGenerateNum'])
-}
-
 export function createMessage(role: MessageRole = MessageRoleEnum.User, content: string = ''): Message {
   return {
     id: uuidv4(),
