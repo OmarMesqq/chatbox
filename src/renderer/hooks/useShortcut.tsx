@@ -56,11 +56,7 @@ function keyboardShortcut(e: KeyboardEvent, navigate?: NavigationCallback) {
     sessionActions.createEmpty('chat')
     return
   }
-  // 创建新图片会话 CmdOrCtrl + Shift + N
-  if (e.code === 'KeyN' && ctrlKey && shift) {
-    sessionActions.createEmpty('picture')
-    return
-  }
+  
   if (e.code === 'KeyR' && ctrlKey) {
     e.preventDefault()
     sessionActions.startNewThread()
