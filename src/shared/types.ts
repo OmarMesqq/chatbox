@@ -320,7 +320,6 @@ export interface ShortcutSetting {
   inputBoxFocus: string // 聚焦输入框的快捷键
   inputBoxWebBrowsingMode: string // 切换输入框的 web 浏览模式的快捷键
   newChat: string // 新建聊天的快捷键
-  newPictureChat: string // 新建图片会话的快捷键
   sessionListNavNext: string // 切换到下一个会话的快捷键
   sessionListNavPrev: string // 切换到上一个会话的快捷键
   sessionListNavTargetIndex: string // 切换到指定会话的快捷键

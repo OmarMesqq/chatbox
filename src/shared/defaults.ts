@@ -50,7 +50,6 @@ export function settings(): Settings {
       inputBoxFocus: 'mod+i', // 聚焦输入框的快捷键
       inputBoxWebBrowsingMode: 'mod+e', // 切换输入框的 web 浏览模式的快捷键
       newChat: 'mod+n', // 新建聊天的快捷键
-      newPictureChat: 'mod+shift+n', // 新建图片会话的快捷键
       sessionListNavNext: 'mod+tab', // 切换到下一个会话的快捷键
       sessionListNavPrev: 'mod+shift+tab', // 切换到上一个会话的快捷键
       sessionListNavTargetIndex: 'mod', // 会话导航的快捷键

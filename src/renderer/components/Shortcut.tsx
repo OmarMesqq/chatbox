@@ -150,11 +150,6 @@ export function ShortcutConfig(props: {
       keys: shortcuts.newChat,
     },
     {
-      label: t('Create a New Image-Creator Conversation'),
-      name: 'newPictureChat',
-      keys: shortcuts.newPictureChat,
-    },
-    {
       label: t('Navigate to the Next Conversation'),
       name: 'sessionListNavNext',
       keys: shortcuts.sessionListNavNext,
