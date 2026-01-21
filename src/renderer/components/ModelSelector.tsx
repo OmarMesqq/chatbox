@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 import { ModelProvider } from '../../shared/types'
 import * as atoms from '../stores/atoms'
 import MiniButton from './MiniButton'
-import { chatboxAIModelLabelHash } from './model-select/ChatboxAIModelSelect'
 import StyledMenu from './StyledMenu'
 
 export function ChatModelSelector(props: {}) {
@@ -66,8 +65,6 @@ export function ChatModelSelector(props: {}) {
 
   const isSmallScreen = useIsSmallScreen()
 
-  const labelHash = currentMergedSettings.aiProvider === ModelProvider.ChatboxAI ? chatboxAIModelLabelHash : {}
-
   const optionElements = optionGroups
     .map((group, index) => {
       const items: React.ReactNode[] = []
@@ -106,7 +103,7 @@ export function ChatModelSelector(props: {}) {
               onClick={() => handleMenuItemSelect(option.value)}
               dense
             >
-              {labelHash[option.value] || option.label}
+              {option.label}
             </MenuItem>
           ))
         )

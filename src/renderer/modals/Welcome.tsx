@@ -58,36 +58,6 @@ const Welcome = NiceModal.create(() => {
             </h3>
           </div>
           <div className="space-y-1">
-            {remoteConfig.setting_chatboxai_first && (
-              <>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    fontSize: '16px',
-                    borderRadius: '6px',
-                    textTransform: 'none',
-                    boxShadow: 'none',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: '4px 12px',
-                    lineHeight: 1.4,
-                  }}
-                  onClick={() => {
-                    settingActions.setModelProvider(ModelProvider.ChatboxAI)
-                    modal.resolve(ModelProvider.ChatboxAI)
-                    modal.hide()
-                  }}
-                >
-                  <span className="">{t('Chatbox AI Cloud')}</span>
-                  <span className="text-[10px] opacity-75">{t('All major AI models in one subscription')}</span>
-                </Button>
-                <div className="flex justify-center my-0">
-                  <span className="px-2 text-sm text-gray-500 dark:text-gray-400">{t('or')}</span>
-                </div>
-              </>
-            )}
             <Button
               variant="outlined"
               fullWidth

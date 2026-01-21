@@ -385,7 +385,7 @@ export default function InputBox() {
               multiple
             />
             <MiniButton
-              className={cn('mr-1 sm:mr-2', currentSessionType !== 'picture' ? '' : 'hidden')}
+              className={cn('mr-1 sm:mr-2', '')}
               style={{ color: theme.palette.text.primary }}
               onClick={onImageUploadClick}
               tooltipTitle={
@@ -399,7 +399,7 @@ export default function InputBox() {
             </MiniButton>
             <input type="file" ref={fileInputRef} className="hidden" onChange={onFileInputChange} multiple />
             <MiniButton
-              className={cn('mr-1 sm:mr-2', currentSessionType !== 'picture' ? '' : 'hidden')}
+              className={cn('mr-1 sm:mr-2', '')}
               style={{ color: theme.palette.text.primary }}
               onClick={onFileUploadClick}
               tooltipTitle={
@@ -414,7 +414,7 @@ export default function InputBox() {
               <FolderClosed size="22" strokeWidth={1} />
             </MiniButton>
             <MiniButton
-              className={cn('mr-1 sm:mr-2', currentSessionType !== 'picture' ? '' : 'hidden')}
+              className={cn('mr-1 sm:mr-2', '')}
               style={{ color: theme.palette.text.primary }}
               onClick={async () => {
                 const links: string[] = await NiceModal.show('attach-link')
@@ -432,7 +432,7 @@ export default function InputBox() {
               <Link size="22" strokeWidth={1} />
             </MiniButton>
             <MiniButton
-              className={cn('mr-1 sm:mr-2', currentSessionType !== 'picture' ? '' : 'hidden')}
+              className={cn('mr-1 sm:mr-2', '')}
               style={{ color: theme.palette.text.primary }}
               onClick={() => {
                 setWebBrowsingMode(!webBrowsingMode)
@@ -489,8 +489,7 @@ export default function InputBox() {
               className="w-8 ml-2 rounded-full flex items-center justify-center"
               style={{
                 color: theme.palette.getContrastText(theme.palette.primary.main),
-                backgroundColor:
-                  currentSessionType === 'picture' ? theme.palette.secondary.main : theme.palette.primary.main,
+                backgroundColor: theme.palette.primary.main
               }}
               tooltipPlacement="top"
               onClick={lastMessage?.generating ? handleStop : () => handleSubmit()}
@@ -527,7 +526,7 @@ export default function InputBox() {
             }}
             placeholder={t('Type your question here...') || ''}
             onPaste={onPaste}
-            // {...{ enterKeyHint: 'send' } as any}
+          // {...{ enterKeyHint: 'send' } as any}
           />
           <div className="flex flex-row items-center" onClick={() => dom.focusMessageInput()}>
             {pictureKeys.map((picKey, ix) => (

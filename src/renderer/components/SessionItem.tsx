@@ -70,8 +70,6 @@ function _SessionItem(props: Props) {
               </Avatar>
             ) : session.picUrl ? (
               <Avatar sizes={medianSize} sx={{ width: medianSize, height: medianSize }} src={session.picUrl} />
-            ) : session.type === 'picture' ? (
-              <VrpanoIcon fontSize="small" />
             ) : (
               <ChatBubbleOutlineOutlinedIcon fontSize="small" />
             )}
