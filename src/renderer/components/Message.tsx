@@ -114,7 +114,6 @@ const Message: FC<Props> = (props) => {
 
   const needCollapse =
     collapseThreshold &&
-    props.sessionType !== 'picture' && // 绘图会话不折叠
     contentLength > collapseThreshold &&
     contentLength - collapseThreshold > 50 // 只有折叠有明显效果才折叠，为了更好的用户体验
   const [isCollapsed, setIsCollapsed] = useState(needCollapse)
@@ -337,11 +336,11 @@ const Message: FC<Props> = (props) => {
       extraButtons:
         msg.role === 'assistant' && platform.type === 'mobile'
           ? [
-              {
-                onClick: onReport,
-                icon: <ReportIcon />,
-              },
-            ]
+            {
+              onClick: onReport,
+              icon: <ReportIcon />,
+            },
+          ]
           : undefined,
     })
   }
@@ -398,18 +397,6 @@ const Message: FC<Props> = (props) => {
                     className="cursor-pointer"
                     onClick={onClickAssistantAvatar}
                   />
-                ) : props.sessionType === 'picture' ? (
-                  <Avatar
-                    sx={{
-                      backgroundColor: theme.palette.secondary.main,
-                      width: '28px',
-                      height: '28px',
-                    }}
-                    className="cursor-pointer"
-                    onClick={onClickAssistantAvatar}
-                  >
-                    <ImageIcon fontSize="small" />
-                  </Avatar>
                 ) : defaultAssistantAvatarKey ? (
                   <Avatar
                     sx={{
@@ -460,17 +447,7 @@ const Message: FC<Props> = (props) => {
                   </Avatar>
                 ),
                 system:
-                  props.sessionType === 'picture' ? (
-                    <Avatar
-                      sx={{
-                        backgroundColor: theme.palette.secondary.main,
-                        width: '28px',
-                        height: '28px',
-                      }}
-                    >
-                      <ImageIcon fontSize="small" />
-                    </Avatar>
-                  ) : (
+                  (
                     <Avatar
                       sx={{
                         backgroundColor: theme.palette.warning.main,
@@ -570,20 +547,6 @@ const Message: FC<Props> = (props) => {
                             </div>
                           )}
                         </div>
-                      ) : item.type === 'image' ? (
-                        props.sessionType !== 'picture' && (
-                          <div key={index}>
-                            <div
-                              className="w-[100px] min-w-[100px] h-[100px] min-h-[100px]
-                                                    md:w-[200px] md:min-w-[200px] md:h-[200px] md:min-h-[200px]
-                                                    inline-flex items-center justify-center                                                                                                                                                  
-                                                    hover:cursor-pointer hover:border-slate-800/20 transition-all duration-200"
-                              onClick={() => showPicture(item.storageKey)}
-                            >
-                              {item.storageKey && <ImageInStorage storageKey={item.storageKey} className="w-full" />}
-                            </div>
-                          </div>
-                        )
                       ) : item.type === 'tool-call' ? (
                         <ToolCallPartUI key={item.toolCallId} part={item} />
                       ) : null
@@ -591,40 +554,7 @@ const Message: FC<Props> = (props) => {
                   </div>
                 )}
               </Box>
-              {props.sessionType === 'picture' && (
-                <div className="flex flex-row items-start justify-start overflow-x-auto overflow-y-hidden">
-                  {msg.contentParts
-                    .filter((p) => p.type === 'image')
-                    .map((pic, index) => (
-                      <div
-                        key={index}
-                        className="w-[100px] min-w-[100px] h-[100px] min-h-[100px]
-                                                    md:w-[200px] md:min-w-[200px] md:h-[200px] md:min-h-[200px]
-                                                    p-1.5 mr-2 mb-2 inline-flex items-center justify-center
-                                                    bg-white dark:bg-slate-800
-                                                    border-solid border-slate-400/20 rounded-md
-                                                    hover:cursor-pointer hover:border-slate-800/20 transition-all duration-200"
-                        onClick={() => {
-                          setPictureShow({
-                            picture: pic,
-                            extraButtons:
-                              msg.role === 'assistant' && platform.type === 'mobile'
-                                ? [
-                                    {
-                                      onClick: onReport,
-                                      icon: <ReportIcon />,
-                                    },
-                                  ]
-                                : undefined,
-                          })
-                        }}
-                      >
-                        {pic.storageKey && <ImageInStorage className="w-full" storageKey={pic.storageKey} />}
-                        {'url' in pic && <Img src={pic.url as string} className="w-full" />}
-                      </div>
-                    ))}
-                </div>
-              )}
+
               {(msg.files || msg.links) && (
                 <div className="flex flex-row items-start justify-start overflow-x-auto overflow-y-hidden pb-1">
                   {msg.files?.map((file, index) => (
@@ -669,17 +599,17 @@ const Message: FC<Props> = (props) => {
                       opacity: 1,
                       ...(fixedButtonGroup
                         ? {
-                            position: 'fixed',
-                            bottom: dom.getInputBoxHeight() + 4 + 'px',
-                            zIndex: 100,
-                            marginBottom: 'var(--mobile-safe-area-inset-bottom, 0px)',
-                          }
+                          position: 'fixed',
+                          bottom: dom.getInputBoxHeight() + 4 + 'px',
+                          zIndex: 100,
+                          marginBottom: 'var(--mobile-safe-area-inset-bottom, 0px)',
+                        }
                         : {}),
                       backgroundColor:
                         theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.background.paper,
                     }}
                     variant="contained"
-                    color={props.sessionType === 'picture' ? 'secondary' : 'primary'}
+                    color={'primary'}
                     aria-label="message button group"
                   >
                     {msg.generating && (
@@ -696,7 +626,7 @@ const Message: FC<Props> = (props) => {
                           <IconButton
                             aria-label="Reply Again"
                             onClick={handleRefresh}
-                            color={props.sessionType === 'picture' ? 'secondary' : 'primary'}
+                            color={'primary'}
                           >
                             <ReplayIcon fontSize="small" />
                           </IconButton>
@@ -708,7 +638,7 @@ const Message: FC<Props> = (props) => {
                         <IconButton
                           aria-label="Reply Again Below"
                           onClick={onGenerateMore}
-                          color={props.sessionType === 'picture' ? 'secondary' : 'primary'}
+                          color={'primary'}
                         >
                           <SouthIcon fontSize="small" />
                         </IconButton>
@@ -717,43 +647,33 @@ const Message: FC<Props> = (props) => {
                     {
                       // Chatbox-AI 模型不支持编辑消息
                       !msg.model?.startsWith('Chatbox-AI') &&
-                        // 图片会话中，助手消息无需编辑
-                        !(msg.role === 'assistant' && props.sessionType === 'picture') && (
-                          <Tooltip title={t('edit')} placement="top">
-                            <IconButton
-                              aria-label="edit"
-                              color={props.sessionType === 'picture' ? 'secondary' : 'primary'}
-                              onClick={onEditClick}
-                              disabled={
-                                // 图文消息暂时不让编辑
-                                !isEmpty(msg.contentParts) && !msg.contentParts!.every((c) => c.type === 'text')
-                              }
-                            >
-                              <EditIcon fontSize="small" />
-                            </IconButton>
-                          </Tooltip>
-                        )
+                      (
+                        <Tooltip title={t('edit')} placement="top">
+                          <IconButton
+                            aria-label="edit"
+                            color={'primary'}
+                            onClick={onEditClick}
+                            disabled={
+                              // 图文消息暂时不让编辑
+                              !isEmpty(msg.contentParts) && !msg.contentParts!.every((c) => c.type === 'text')
+                            }
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      )
                     }
-                    {!(props.sessionType === 'picture' && msg.role === 'assistant') && (
-                      <Tooltip title={t('copy')} placement="top">
-                        <IconButton
-                          aria-label="copy"
-                          onClick={onCopyMsg}
-                          color={props.sessionType === 'picture' ? 'secondary' : 'primary'}
-                        >
-                          <CopyAllIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    {!msg.generating && props.sessionType === 'picture' && msg.role === 'assistant' && (
-                      <Tooltip title={t('Generate More Images Below')} placement="top">
-                        <IconButton aria-label="copy" onClick={onGenerateMore} color="secondary">
-                          <AddPhotoAlternateIcon className="mr-1" fontSize="small" />
-                          <Typography fontSize="small">{t('More Images')}</Typography>
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <IconButton onClick={handleClick} color={props.sessionType === 'picture' ? 'secondary' : 'primary'}>
+                    <Tooltip title={t('copy')} placement="top">
+                      <IconButton
+                        aria-label="copy"
+                        onClick={onCopyMsg}
+                        color={'primary'}
+                      >
+                        <CopyAllIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    
+                    <IconButton onClick={handleClick} color={'primary'}>
                       <MoreVertIcon fontSize="small" />
                     </IconButton>
                     <StyledMenu

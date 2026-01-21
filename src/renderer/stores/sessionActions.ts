@@ -517,7 +517,7 @@ export async function submitNewUserMessage(params: {
     }
     newAssistantMsg.status.push({
       type: 'sending_file',
-      mode: isChatboxAI ? 'advanced' : 'local',
+      mode: 'local',
     })
   }
   if (links && links.length > 0) {
@@ -526,7 +526,7 @@ export async function submitNewUserMessage(params: {
     }
     newAssistantMsg.status.push({
       type: 'loading_webpage',
-      mode: isChatboxAI ? 'advanced' : 'local',
+      mode: 'local',
     })
   }
   if (needGenerating) {
@@ -649,7 +649,7 @@ export async function generate(sessionId: string, targetMsg: Message, options?: 
     cancel: undefined,
     aiProvider: settings.aiProvider,
     model: await getModelDisplayName(settings, session.type || 'chat'),
-    style: session.type === 'picture' ? settings.dalleStyle : undefined,
+    style: undefined, //TODO: will never be used. Images are deactivated.
     generating: true,
     errorCode: undefined,
     error: undefined,

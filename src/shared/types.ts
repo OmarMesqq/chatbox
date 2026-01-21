@@ -97,11 +97,11 @@ export interface Message {
   status?: (
     | {
         type: 'sending_file'
-        mode?: 'local' | 'advanced'
+        mode?: 'local'
       }
     | {
         type: 'loading_webpage'
-        mode?: 'local' | 'advanced'
+        mode?: 'local'
       }
   )[]
 
