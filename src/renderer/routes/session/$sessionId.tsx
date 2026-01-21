@@ -28,14 +28,7 @@ function RouteComponent() {
 
   return currentSession ? (
     <div className="flex flex-col h-full">
-      {/* {
-                    // 小屏幕的广告UI
-                    isSmallScreen && (
-                        <Box className="text-center">
-                            <SponsorChip />
-                        </Box>
-                    )
-                } */}
+      
       <Header />
 
       {/* MessageList 设置 key，确保每个 session 对应新的 MessageList 实例 */}
