@@ -84,9 +84,6 @@ export async function createEmpty(type: 'chat' | 'picture') {
     case 'chat':
       newSession = await create(initEmptyChatSession())
       break
-    case 'picture':
-      newSession = await create(initEmptyPictureSession())
-      break
     default:
       throw new Error(`Unknown session type: ${type}`)
   }
@@ -483,6 +480,7 @@ export function removeMessage(sessionId: string, messageId: string) {
 /**
  * 在会话中发送新用户消息，并根据需要生成回复
  * @param params
+ * HERE!
  */
 export async function submitNewUserMessage(params: {
   currentSessionId: string
@@ -669,6 +667,7 @@ export async function submitNewUserMessage(params: {
  * @param sessionId
  * @param targetMsg
  * @returns
+ * HERE!
  */
 export async function generate(sessionId: string, targetMsg: Message, options?: { webBrowsing?: boolean }) {
   // 获得依赖的数据
@@ -1007,14 +1006,6 @@ export function initEmptyChatSession(): Omit<Session, 'id'> {
     newSession.messages.push(createMessage('system', settings.defaultPrompt || defaults.getDefaultPrompt()))
   }
   return newSession
-}
-
-export function initEmptyPictureSession(): Omit<Session, 'id'> {
-  return {
-    name: 'Untitled',
-    type: 'picture',
-    messages: [createMessage('system', i18n.t('Image Creator Intro') || '')],
-  }
 }
 
 export function getSessions() {
