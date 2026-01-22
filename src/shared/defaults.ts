@@ -1,4 +1,4 @@
-import { Theme, Config, Settings, ModelProvider, Session } from './types'
+import { Theme, Config, Settings, ModelProvider } from './types'
 import { v4 as uuidv4 } from 'uuid'
 
 export function settings(): Settings {

@@ -18,7 +18,6 @@ export interface MessageFile {
   fileType: string
   url?: string
   storageKey?: string
-  chatboxAIFileUUID?: string
 }
 
 export interface MessageLink {
@@ -26,7 +25,6 @@ export interface MessageLink {
   url: string
   title: string
   storageKey?: string
-  chatboxAILinkUUID?: string
 }
 
 export interface MessagePicture {
