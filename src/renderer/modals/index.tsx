@@ -8,7 +8,6 @@ import ClearSessionList from './ClearSessionList'
 import ExportChat from './ExportChat'
 import MessageEdit from './MessageEdit'
 import AttachLink from './AttachLink'
-import ReportContent from './ReportContent'
 
 NiceModal.register('welcome', Welcome)
 NiceModal.register('provider-selector', ProviderSelector)
@@ -19,4 +18,3 @@ NiceModal.register('clear-session-list', ClearSessionList)
 NiceModal.register('export-chat', ExportChat)
 NiceModal.register('message-edit', MessageEdit)
 NiceModal.register('attach-link', AttachLink)
-NiceModal.register('report-content', ReportContent)
