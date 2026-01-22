@@ -361,8 +361,6 @@ export enum Theme {
 }
 
 
-export type ChatboxAIModel = 'chatboxai-3.5' | 'chatboxai-4' | string
-
 export interface ModelOptionGroup {
   group_name?: string
   options: {
