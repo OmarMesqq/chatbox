@@ -228,16 +228,12 @@ export enum ModelProvider {
 export interface ModelSettings {
   aiProvider: ModelProvider // 当前应用中使用的provider（虽然可以配很多，但实际同时只能使用一个）
 
-  // ollama
   ollamaHost: string
   ollamaModel: string
 
-
   temperature: number // 0-2
   topP: number // 0-1
-  maxContextMessageCount?: number
-  // maxContextSize: string 弃用，字段名永远不在使用，避免老版本报错
-  // maxTokens: string 弃用，字段名永远不在使用，避免老版本报错
+  maxContextMessageCount: number  // amount of messages for the model to recall
 }
 
 export type ModelMeta = {

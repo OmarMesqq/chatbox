@@ -42,9 +42,6 @@ import * as scrollActions from './scrollActions'
 import { createSession, getSession, saveSession, copySession, clearConversations } from './sessionStorageMutations'
 import { cloneMessage, countMessageWords, getMessageText, mergeMessages } from '../utils/message'
 import * as settingActions from './settingActions'
-import { StorageKeyGenerator } from '@/storage/StoreStorage'
-import { toBeRemoved_getContextMessageCount } from '@/components/MaxContextMessageCountSlider'
-import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 
 /**
  * 创建一个新的会话
@@ -861,9 +858,8 @@ async function genMessageContext(settings: Settings, msgs: Message[]) {
     const size = + 20 // 20 作为预估的误差补偿
 
     if (
-      toBeRemoved_getContextMessageCount(OPENAI_MAX_CONTEXT_MESSAGE_COUNT, maxContextMessageCount) <
-      Number.MAX_SAFE_INTEGER &&
-      prompts.length >= toBeRemoved_getContextMessageCount(OPENAI_MAX_CONTEXT_MESSAGE_COUNT, maxContextMessageCount) + 1 // +1是为了保留用户最后一条输入消息
+      maxContextMessageCount < Number.MAX_SAFE_INTEGER &&
+      prompts.length >= (maxContextMessageCount + 1) // +1是为了保留用户最后一条输入消息
     ) {
       break
     }

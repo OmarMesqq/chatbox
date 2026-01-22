@@ -1,17 +1,13 @@
-import MaxContextMessageCountSlider, {
-  toBeRemoved_getContextMessageCount,
-} from '@/components/MaxContextMessageCountSlider'
+import MaxContextMessageCountSlider from '@/components/MaxContextMessageCountSlider'
 import { OllamaModelSelect } from '@/components/model-select/OllamaModelSelect'
 import TemperatureSlider from '@/components/TemperatureSlider'
 import TextFieldReset from '@/components/TextFieldReset'
-import platform from '@/platform'
 import { languageAtom } from '@/stores/atoms'
-import { Alert, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { ModelSettings } from '@/../shared/types'
 import { Accordion, AccordionDetails, AccordionSummary } from '@/components/Accordion'
-import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 
 export function OllamaHostInput(props: {
   ollamaHost: string
@@ -55,10 +51,7 @@ export default function OllamaSetting(props: ModelConfigProps) {
         </AccordionSummary>
         <AccordionDetails>
           <MaxContextMessageCountSlider
-            value={toBeRemoved_getContextMessageCount(
-              OPENAI_MAX_CONTEXT_MESSAGE_COUNT,
-              settingsEdit.maxContextMessageCount
-            )}
+            value={settingsEdit.maxContextMessageCount}
             onChange={(v) => setSettingsEdit({ ...settingsEdit, maxContextMessageCount: v })}
           />
           <TemperatureSlider

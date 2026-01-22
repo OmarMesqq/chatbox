@@ -8,9 +8,7 @@ import {
 import { Accordion, AccordionDetails, AccordionSummary } from '@/components/Accordion'
 import EditableAvatar from '@/components/EditableAvatar'
 import { ImageInStorage, handleImageInputAndSave } from '@/components/Image'
-import MaxContextMessageCountSlider, {
-  toBeRemoved_getContextMessageCount,
-} from '@/components/MaxContextMessageCountSlider'
+import MaxContextMessageCountSlider from '@/components/MaxContextMessageCountSlider'
 import { OllamaModelSelect } from '@/components/model-select/OllamaModelSelect'
 import TemperatureSlider from '@/components/TemperatureSlider'
 import TopPSlider from '@/components/TopPSlider'
@@ -22,7 +20,6 @@ import { getSession, saveSession } from '@/stores/sessionStorageMutations'
 import * as sessionActions from '@/stores/sessionActions'
 import { getMessageText } from '@/utils/message'
 import NiceModal, { muiDialogV5, useModal } from '@ebay/nice-modal-react'
-import ImageIcon from '@mui/icons-material/Image'
 import SmartToyIcon from '@mui/icons-material/SmartToy'
 import {
   Button,
@@ -39,7 +36,6 @@ import {
 import { useAtom, useAtomValue } from 'jotai'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { OPENAI_MAX_CONTEXT_MESSAGE_COUNT } from '@/MAGIC_NUMBER'
 
 const SessionSettings = NiceModal.create(({ chatConfigDialogSessionId }: { chatConfigDialogSessionId: string }) => {
   const modal = useModal()
@@ -240,10 +236,7 @@ function ChatConfig(props: { dataEdit: Session; setDataEdit: (data: Session) => 
         </>
       )}
       <MaxContextMessageCountSlider
-        value={toBeRemoved_getContextMessageCount(
-          OPENAI_MAX_CONTEXT_MESSAGE_COUNT,
-          mergedSettings.maxContextMessageCount
-        )}
+        value={mergedSettings.maxContextMessageCount}
         onChange={(v) => updateSettingsEdit({ maxContextMessageCount: v })}
         className={'opacity-50'}
       />

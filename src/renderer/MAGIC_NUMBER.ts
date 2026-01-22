@@ -1,1 +1,0 @@
-export const OPENAI_MAX_CONTEXT_MESSAGE_COUNT = 20;

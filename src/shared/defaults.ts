@@ -7,6 +7,7 @@ export function settings(): Settings {
 
     temperature: 0.7,
     topP: 1,
+    maxContextMessageCount: 20,   // 10 user prompts + 10 model responses
 
     // maxContextSize: "4000",
     // maxTokens: "2048",
