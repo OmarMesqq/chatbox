@@ -8,6 +8,4 @@ export const CHATBOX_BUILD_PLATFORM = (process.env.CHATBOX_BUILD_PLATFORM || 'un
   | 'android'
   | 'web'
 
-export const USE_LOCAL_API = process.env.USE_LOCAL_API || ''
-
 export const NODE_ENV = process.env.NODE_ENV || 'development'

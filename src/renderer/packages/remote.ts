@@ -1,4 +1,3 @@
-import { USE_LOCAL_API } from '@/variables'
 import { ofetch } from 'ofetch'
 import { afetch, uploadFile } from './request'
 import * as cache from './cache'
@@ -6,7 +5,7 @@ import { uniq } from 'lodash'
 import platform from '@/platform'
 
 // ========== API ORIGIN 根据可用性维护 ==========
-export let API_ORIGIN = 'http://localhost:8080'
+export const API_ORIGIN = 'http://localhost:8080'
 
 
 /**
@@ -35,7 +34,7 @@ async function testApiOrigins() {
         pool = uniq([...pool, ...res.data.api_origins])
       }
       // 如果当前 API 可用，则切换所有流量到该域名
-      API_ORIGIN = origin
+      // API_ORIGIN = origin
       pool = uniq([origin, ...pool]) // 将当前 API 域名添加到列表顶部
       await cache.store.setItem('api_origins', pool)
       return
@@ -43,17 +42,6 @@ async function testApiOrigins() {
       i++
     }
   }
-}
-
-// 默认情况下，应用启动时立即测试并设置可用 API 域名，并且每小时测试一次并更新缓存
-// 如果使用本地 API，则不进行测试
-if (USE_LOCAL_API) {
-  console.log('==================')
-  console.log('Using local API')
-  console.log('==================')
-  API_ORIGIN = 'http://localhost:8002'
-} else {
-  console.log(`placeholder for prod testApiOrigins()`)
 }
 
 

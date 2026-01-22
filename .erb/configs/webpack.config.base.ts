@@ -54,7 +54,6 @@ const configuration: webpack.Configuration = {
       NODE_ENV: 'production',
       CHATBOX_BUILD_TARGET: 'unknown',
       CHATBOX_BUILD_PLATFORM: 'unknown',
-      USE_LOCAL_API: '',
     }),
   ],
 }
