@@ -1,6 +1,5 @@
 import { USE_LOCAL_API } from '@/variables'
 import {
-  RemoteConfig,
   ModelProvider,
   ModelOptionGroup,
 } from '../../shared/types'
@@ -61,15 +60,6 @@ if (USE_LOCAL_API) {
   console.log(`placeholder for prod testApiOrigins()`)
 }
 
-export async function getRemoteConfig(config: keyof RemoteConfig) {
-  type Response = {
-    data: Pick<RemoteConfig, typeof config>
-  }
-  const res = await ofetch<Response>(`${API_ORIGIN}/api/remote_config/${config}`, {
-    retry: 3,
-  })
-  return res['data']
-}
 
 export interface DialogConfig {
   markdown: string

@@ -33,11 +33,6 @@ export function getProxy() {
   return settings.proxy
 }
 
-export function getRemoteConfig() {
-  const store = getDefaultStore()
-  return store.get(atoms.remoteConfigAtom)
-}
-
 export function getSettings() {
   const store = getDefaultStore()
   return store.get(atoms.settingsAtom)

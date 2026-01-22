@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { Box, Grid } from '@mui/material'
-import { RemoteConfig, ModelProvider } from '@/../shared/types'
 import CleanWidnow from '@/pages/CleanWindow'
 import useAppTheme from '@/hooks/useAppTheme'
 import useShortcut from '@/hooks/useShortcut'
@@ -32,15 +31,12 @@ function Root() {
 
   const setOpenAboutDialog = useSetAtom(atoms.openAboutDialogAtom)
 
-  const setRemoteConfig = useSetAtom(atoms.remoteConfigAtom)
+  
   useEffect(() => {
     // 通过定时器延迟启动，防止处理状态底层存储的异步加载前错误的初始数据
     const tid = setTimeout(() => {
       ;(async () => {
-        const remoteConfig = await remote
-          .getRemoteConfig('setting_chatboxai_first')
-          .catch(() => ({ setting_chatboxai_first: false } as RemoteConfig))
-        setRemoteConfig((conf) => ({ ...conf, ...remoteConfig }))
+        
         // 是否需要弹出设置窗口
         if (settingActions.needEditSetting()) {
           const res = await NiceModal.show('welcome')
@@ -58,7 +54,7 @@ function Root() {
         // 是否需要弹出关于窗口（更新后首次启动）
         // 目前仅在桌面版本更新后首次启动、且网络环境为"外网"的情况下才自动弹窗
         const shouldShowAboutDialogWhenStartUp = await platform.shouldShowAboutDialogWhenStartUp()
-        if (shouldShowAboutDialogWhenStartUp && remoteConfig.setting_chatboxai_first) {
+        if (shouldShowAboutDialogWhenStartUp) {
           setOpenAboutDialog(true)
           return
         }

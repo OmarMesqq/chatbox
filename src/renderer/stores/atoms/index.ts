@@ -1,5 +1,4 @@
 export * from './settingsAtoms'
 export * from './sessionAtoms'
 export * from './uiAtoms'
-export * from './configAtoms'
 export * from './throttleWriteSessionAtom'

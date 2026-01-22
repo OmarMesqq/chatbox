@@ -2,15 +2,10 @@ import NiceModal, { useModal, muiDialogV5 } from '@ebay/nice-modal-react'
 import { Box, Button, Paper, Dialog, DialogContent } from '@mui/material'
 import icon from '../static/icon.png'
 import { useTranslation } from 'react-i18next'
-import * as atoms from '@/stores/atoms'
-import { ModelProvider } from '../../shared/types'
-import * as settingActions from '@/stores/settingActions'
-import { useAtomValue } from 'jotai'
 
 const Welcome = NiceModal.create(() => {
   const { t } = useTranslation()
   const modal = useModal()
-  const remoteConfig = useAtomValue(atoms.remoteConfigAtom)
 
   return (
     <Dialog

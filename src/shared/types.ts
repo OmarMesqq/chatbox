@@ -360,10 +360,6 @@ export enum Theme {
   System,
 }
 
-export interface RemoteConfig {
-  setting_chatboxai_first: boolean
-  product_ids: number[]
-}
 
 export type ChatboxAIModel = 'chatboxai-3.5' | 'chatboxai-4' | string
 

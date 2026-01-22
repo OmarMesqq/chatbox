@@ -472,7 +472,6 @@ export function removeMessage(sessionId: string, messageId: string) {
 /**
  * 在会话中发送新用户消息，并根据需要生成回复
  * @param params
- * HERE!
  */
 export async function submitNewUserMessage(params: {
   currentSessionId: string
@@ -504,7 +503,6 @@ export async function submitNewUserMessage(params: {
   insertMessage(currentSessionId, newUserMsg)
 
   const settings = getCurrentSessionMergedSettings()
-  const remoteConfig = settingActions.getRemoteConfig()
 
   // 根据需要，插入空白的回复消息
   let newAssistantMsg = createMessage('assistant', '')
@@ -535,11 +533,7 @@ export async function submitNewUserMessage(params: {
     // 如果本次消息开启了联网问答，需要检查当前模型是否支持
     // 桌面版&手机端总是支持联网问答，不再需要检查模型是否支持
     if (webBrowsing && platform.type === 'web' && !isModelSupportToolUse(settings)) {
-      if (remoteConfig.setting_chatboxai_first) {
-        throw ChatboxAIAPIError.fromCodeName('model_not_support_web_browsing', 'model_not_support_web_browsing')
-      } else {
-        throw ChatboxAIAPIError.fromCodeName('model_not_support_web_browsing_2', 'model_not_support_web_browsing_2')
-      }
+      throw ChatboxAIAPIError.fromCodeName('model_not_support_web_browsing_2', 'model_not_support_web_browsing_2');
     }
 
     // 如果本次发送消息携带了附件，应该在这次发送中上传文件并构造文件信息(file uuid)
@@ -551,12 +545,7 @@ export async function submitNewUserMessage(params: {
         await new Promise((resolve) => setTimeout(resolve, 3000)) // 等待一段时间，方便显示提示
         const result = await platform.parseFileLocally(attachment, { tokenLimit: tokenLimitPerFile })
         if (!result.isSupported || !result.key) {
-          // 根据当前 IP，判断是否在错误中推荐 Chatbox AI
-          if (remoteConfig.setting_chatboxai_first) {
-            throw ChatboxAIAPIError.fromCodeName('model_not_support_file', 'model_not_support_file')
-          } else {
-            throw ChatboxAIAPIError.fromCodeName('model_not_support_file_2', 'model_not_support_file_2')
-          }
+          throw ChatboxAIAPIError.fromCodeName('model_not_support_file_2', 'model_not_support_file_2');
         }
         newFiles.push({
           id: result.key,
@@ -625,7 +614,6 @@ export async function submitNewUserMessage(params: {
  * @param sessionId
  * @param targetMsg
  * @returns
- * HERE!
  */
 export async function generate(sessionId: string, targetMsg: Message, options?: { webBrowsing?: boolean }) {
   // 获得依赖的数据

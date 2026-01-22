@@ -24,7 +24,7 @@ export default function MessageStatuses(props: { statuses: Message['status'] }) 
 function MessageStatus(props: { status: NonNullable<Message['status']>[number] }) {
   const { status } = props
   const { t } = useTranslation()
-  const remoteConfig = useAtomValue(atoms.remoteConfigAtom)
+  
   if (status.type === 'sending_file') {
     return (
       <div>
@@ -54,18 +54,6 @@ function MessageStatus(props: { status: NonNullable<Message['status']>[number] }
             )}
           </span>
         </LoadingBubble>
-        {status.mode === 'local' && remoteConfig.setting_chatboxai_first && (
-          <Typography variant="body2" sx={{ opacity: 0.5 }} className="pb-1">
-            <Trans
-              i18nKey="Due to local processing limitations, <Link>Chatbox AI Service</Link> is recommended to enhance webpage parsing capabilities, especially for dynamic pages."
-              components={{
-                Link: (
-                  <LinkTargetBlank href="https://chatboxai.app/redirect_app/advanced_url_processing"></LinkTargetBlank>
-                ),
-              }}
-            />
-          </Typography>
-        )}
       </div>
     )
   }
