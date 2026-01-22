@@ -13,8 +13,6 @@ export async function parseTextFile(file: File, options: { maxLength?: number } 
 }
 
 export async function parseUrl(url: string) {
-  const result = await remote.parseUserLinkFree({ url })
-  const key = `parseUrl-` + uuidv4()
-  await platform.setStoreBlob(key, result.text)
-  return { key, title: result.title }
+  const result = await remote.parseUserLinkPro({ licenseKey: '', url: url })
+  return { key: result.key, title: result.title, storageKey: result.storageKey };
 }

@@ -7,7 +7,6 @@ import platform from '@/platform'
 // ========== API ORIGIN 根据可用性维护 ==========
 export const API_ORIGIN = 'http://localhost:8080'
 
-
 /**
  * 按顺序测试 API 的可用性，只要有一个 API 域名可用，就终止测试并切换所有流量到该域名。
  * 在测试过程中，会根据服务器返回添加新的 API 域名，并缓存到本地
@@ -44,7 +43,6 @@ async function testApiOrigins() {
   }
 }
 
-
 export interface DialogConfig {
   markdown: string
   buttons: { label: string; url: string }[]
@@ -62,7 +60,7 @@ export async function getDialogConfig(params: { uuid: string; language: string; 
   return res['data'] || null
 }
 
-export async function generateUploadUrl(params: { licenseKey: string; filename: string }) {
+async function generateUploadUrl(params: { licenseKey: string; filename: string }) {
   type Response = {
     data: {
       url: string
@@ -85,7 +83,7 @@ export async function generateUploadUrl(params: { licenseKey: string; filename: 
   return json['data']
 }
 
-export async function createUserFile<T extends boolean>(params: {
+async function createUserFile<T extends boolean>(params: {
   licenseKey: string
   filename: string
   filetype: string
@@ -113,7 +111,7 @@ export async function createUserFile<T extends boolean>(params: {
   return json['data']
 }
 
-export async function uploadAndCreateUserFile(licenseKey: string, file: File) {
+async function uploadAndCreateUserFile(licenseKey: string, file: File) {
   const { url, filename } = await generateUploadUrl({
     licenseKey,
     filename: file.name,
@@ -169,7 +167,7 @@ export async function parseUserLinkPro(params: { licenseKey: string; url: string
   }
 }
 
-export async function parseUserLinkFree(params: { url: string }) {
+async function parseUserLinkFree(params: { url: string }) {
   type Response = {
     title: string
     text: string
@@ -178,8 +176,6 @@ export async function parseUserLinkFree(params: { url: string }) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'CHATBOX-PLATFORM': platform.type,
-      'CHATBOX-VERSION': (await platform.getVersion()) || 'unknown',
     },
     body: JSON.stringify(params),
   })
