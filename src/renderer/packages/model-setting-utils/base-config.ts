@@ -10,19 +10,16 @@ export default abstract class BaseConfig {
   // 有三个来源：本地写死、后端配置、服务商模型列表
   public async getMergeOptionGroups(settings: ModelSettings): Promise<ModelOptionGroup[]> {
     const localOptionGroups = this.getLocalOptionGroups(settings)
-    const [modelConfigs, models] = await Promise.all([
-      remote.getModelConfigsWithCache(settings).catch((e) => {
-        return { option_groups: [] as ModelOptionGroup[] }
-      }),
-      this.listProviderModels(settings).catch((e) => {
-        return []
-      }),
-    ])
-    const remoteOptionGroups = [
-      ...modelConfigs.option_groups,
-      ...models.map((model) => ({ options: [{ label: model, value: model }] })),
-    ]
-    return this.mergeOptionGroups(localOptionGroups, remoteOptionGroups)
+    const models = await this.listProviderModels(settings).catch((e) => {
+      console.error(`getMergeOptionGroups.listProviderModels exception: ${e}`);
+      return []
+    });
+
+    const providerOptionGroups = models.map((model) => ({
+      options: [{ label: model, value: model }]
+    }));
+
+    return this.mergeOptionGroups(localOptionGroups, providerOptionGroups)
   }
 
   /**

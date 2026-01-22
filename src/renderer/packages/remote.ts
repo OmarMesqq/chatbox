@@ -1,8 +1,4 @@
 import { USE_LOCAL_API } from '@/variables'
-import {
-  ModelProvider,
-  ModelOptionGroup,
-} from '../../shared/types'
 import { ofetch } from 'ofetch'
 import { afetch, uploadFile } from './request'
 import * as cache from './cache'
@@ -233,52 +229,3 @@ export async function webBrowsing(params: { licenseKey: string; query: string })
   const json: Response = await res.json()
   return json['data']
 }
-
-
-export async function getModelConfigs(params: { aiProvider: ModelProvider; licenseKey?: string; language?: string }) {
-  type Response = {
-    data: {
-      option_groups: ModelOptionGroup[]
-    }
-  }
-  const res = await afetch(
-    `${API_ORIGIN}/api/model_configs`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        aiProvider: params.aiProvider,
-        licenseKey: params.licenseKey,
-        language: params.language,
-      }),
-    },
-    {
-      parseChatboxRemoteError: true,
-      retry: 2,
-    }
-  )
-  const json: Response = await res.json()
-  return json['data']
-}
-
-export async function getModelConfigsWithCache(params: {
-  aiProvider: ModelProvider
-  licenseKey?: string
-  language?: string
-}) {
-  type ModelConfig = Awaited<ReturnType<typeof getModelConfigs>>
-  const remoteOptionGroups = await cache.cache<ModelConfig>(
-    `model-options:${params.aiProvider}:${params.licenseKey}:${params.language}1`,
-    async () => {
-      return await getModelConfigs(params)
-    },
-    {
-      ttl: USE_LOCAL_API ? 1000 * 5 : 1000 * 60 * 10,
-      refreshFallbackToCache: true,
-    }
-  )
-  return remoteOptionGroups
-}
-
