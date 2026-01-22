@@ -634,7 +634,6 @@ export async function generate(sessionId: string, targetMsg: Message, options?: 
     cancel: undefined,
     aiProvider: settings.aiProvider,
     model: await getModelDisplayName(settings, session.type || 'chat'),
-    style: undefined, //TODO: will never be used. Images are deactivated.
     generating: true,
     errorCode: undefined,
     error: undefined,

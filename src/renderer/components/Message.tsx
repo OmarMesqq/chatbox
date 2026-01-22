@@ -221,7 +221,6 @@ const Message: FC<Props> = (props) => {
   } else if (props.sessionType === 'picture') {
     if (showModelName && props.msg.role === 'assistant') {
       tips.push(`model: ${props.msg.model || 'unknown'}`)
-      tips.push(`style: ${props.msg.style || 'unknown'}`)
     }
   }
 

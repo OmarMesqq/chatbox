@@ -75,9 +75,6 @@ export interface Message {
   aiProvider?: ModelProvider
   model?: string
 
-  style?: string // image style
-  // pictures?: MessagePicture[] // 迁移到 contentParts 中
-
   files?: MessageFile[] // chatboxai 专用
   links?: MessageLink[] // chatboxai 专用
 
@@ -119,9 +116,8 @@ export type ExportChatFormat = 'Markdown' | 'TXT' | 'HTML'
 export type SessionType = 'chat'
 
 export function isChatSession(session: Session) {
-  return session.type === 'chat' || !session.type
+  return session.type === 'chat';
 }
-
 
 export interface Session {
   id: string
@@ -170,45 +166,12 @@ export function settings2SessionSettings(settings: ModelSettings) {
   return pick(settings, [
     'aiProvider',
 
-    'chatboxAIModel',
-    'openaiMaxContextMessageCount',
     'maxContextMessageCount',
     'temperature',
     'topP',
-    'dalleStyle',
-    'imageGenerateNum',
-
-    'model',
-    'openaiCustomModel',
-    // 'openaiMaxContextTokens',
-    // 'openaiMaxTokens',
-
-    'azureDeploymentName',
-    'azureDalleDeploymentName',
-
-    'chatglmModel',
-
-    'claudeModel',
 
     'ollamaHost',
     'ollamaModel',
-
-    'geminiModel',
-
-    'groqModel',
-
-    'deepseekModel',
-
-    'siliconCloudModel',
-
-    'lmStudioModel',
-
-    'perplexityModel',
-
-    'xAIModel',
-
-    'selectedCustomProviderId',
-    'customProviders',
   ])
 }
 
